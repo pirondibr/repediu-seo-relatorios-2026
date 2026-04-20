@@ -14,3 +14,5 @@ python gerar_relatorio.py
 ```
 
 Saída principal: `relatorio_v2_destaques_2025_vs_2026.html`.
+
+A aba **Proximas etapas** lê `proximas_etapas.tsv` (palavra-chave + tab + volume mensal estimado) e remove automaticamente termos que já estão no **Top 5** do export Semrush `repediu marco 2026.txt`.

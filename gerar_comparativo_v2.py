@@ -13,6 +13,7 @@ BASE = r"C:\Users\Usuario\OneDrive\Documentos\seo 2026"
 FILE_2025 = os.path.join(BASE, "repediu marco 2025.txt")
 FILE_2026 = os.path.join(BASE, "repediu marco 2026.txt")
 FILE_GSC = os.path.join(BASE, "Desempenho repediu 2026.htm")
+FILE_PROXIMAS = os.path.join(BASE, "proximas_etapas.tsv")
 OUT = os.path.join(BASE, "relatorio_v2_destaques_2025_vs_2026.html")
 
 # Destaques adicionais na aba (pos. 2025 tratada como ausente: coluna "—", delta NOVA).
@@ -38,6 +39,15 @@ SERPS_ULTRAPASSADOS = [
             {"url": "https://www.bitrix24.com.br/", "pos": 4, "ours": False},
             {"url": "https://saipos.com/", "pos": 5, "ours": False},
             {"url": "https://www.salesforce.com/", "pos": 6, "ours": False},
+        ],
+    },
+    {
+        "termo": "marketing pizzaria delivery",
+        "rows": [
+            {"url": "https://repediu.com.br/", "pos": 3, "ours": True},
+            {"url": "https://goomer.com.br/", "pos": 4, "ours": False},
+            {"url": "https://alldaya.com.br/", "pos": 5, "ours": False},
+            {"url": "https://expressodelivery.com.br/", "pos": 6, "ours": False},
         ],
     },
 ]
@@ -367,6 +377,123 @@ def fmt_pct(old, new):
     return f'<span class="{cls}">{sign}{pct:.0f}%</span>'
 
 
+def load_proximas_etapas_tsv(path):
+    """Carrega palavra + volume mensal estimado; deduplica por keyword (mantem maior volume)."""
+    rows = []
+    if not os.path.isfile(path):
+        return rows
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "\t" not in line:
+                continue
+            a, b = line.rsplit("\t", 1)
+            try:
+                vol = int(b.strip())
+            except ValueError:
+                continue
+            kw = a.strip()
+            if kw:
+                rows.append((kw, vol))
+    merged = {}
+    for kw, vol in rows:
+        k = kw.lower().strip()
+        if k not in merged or vol > merged[k][1]:
+            merged[k] = (kw, vol)
+    return sorted(merged.values(), key=lambda x: (-x[1], x[0].lower()))
+
+
+def semrush_best_pos_mar26(kw: str, pmap: dict):
+    q = kw.lower().strip()
+    for k, p in pmap.items():
+        if k.lower().strip() == q:
+            return p
+    return None
+
+
+def split_proximas_etapas(rows, pmap: dict):
+    """Remove da lista prioritaria qualquer keyword ja no Top 5 em Mar/2026 (Semrush)."""
+    inc, exc = [], []
+    for kw, vol in rows:
+        p = semrush_best_pos_mar26(kw, pmap)
+        if p is not None and p <= 5:
+            exc.append((kw, vol, p))
+        else:
+            inc.append((kw, vol, p))
+    inc.sort(key=lambda x: (-x[1], x[0].lower()))
+    exc.sort(key=lambda x: (x[2], -x[1], x[0].lower()))
+    return inc, exc
+
+
+def build_proximas_tab_inner(inc, exc, n_src_lines):
+    if n_src_lines == 0:
+        return """<section class="card">
+      <h2>Proximas etapas</h2>
+      <p>Ficheiro <code style="color:var(--accent);">proximas_etapas.tsv</code> nao encontrado ou vazio.
+      Formato por linha: <code>palavra-chave[TAB]volume</code>.</p>
+    </section>"""
+    rows_h = []
+    for i, (kw, vol, p) in enumerate(inc, 1):
+        ke = html_escape.escape(kw)
+        pos_cell = str(p) if p is not None else "—"
+        rows_h.append(
+            f"<tr><td class='idx'>{i}</td><td>{ke}</td><td class='num'>{_pt_int(vol)}</td>"
+            f"<td class='num'>{pos_cell}</td></tr>"
+        )
+    ex_h = []
+    for kw, vol, p in exc:
+        ex_h.append(
+            f"<tr><td>{html_escape.escape(kw)}</td><td class='num'>{_pt_int(vol)}</td>"
+            f"<td class='num'><span class='up'>#{p}</span> Top 5</td></tr>"
+        )
+    rows_table = "\n".join(rows_h) if rows_h else "<tr><td colspan='4'>Nenhuma palavra na lista apos filtros.</td></tr>"
+    ex_table = "\n".join(ex_h) if ex_h else "<tr><td colspan='3'>Nenhuma excluida.</td></tr>"
+    vol_sum = sum(v for _, v, _ in inc)
+    chart_block = ""
+    if inc:
+        chart_block = """
+    <section class="card">
+      <h2>Volume estimado (top 20 da fila)</h2>
+      <div class="chart-wrap sm" style="height:420px;"><canvas id="chartProxEtapas"></canvas></div>
+    </section>"""
+    return f"""
+    <section class="card">
+      <h2>Proximas etapas &mdash; prioridades de conteudo</h2>
+      <p>Palavras a atacar nos proximos meses (volume de pesquisa mensal estimado). Foram removidas da lista
+      todas as que <strong>ja rankeiam no Top 5</strong> em Marco/2026 no export Semrush atual.</p>
+      <div class="banner info" style="margin-top:14px;">
+        <strong>{len(inc)}</strong> palavras na fila &middot; volume agregado (estim.): <strong>{_pt_int(vol_sum)}</strong>/mes
+        &middot; <strong>{len(exc)}</strong> excluidas por ja estarem no Top 5
+        &middot; <strong>{n_src_lines}</strong> linhas no ficheiro fonte (apos deduplicacao por termo).
+      </div>
+    </section>{chart_block}
+    <section class="card">
+      <h2>Lista completa (ordenada por volume)</h2>
+      <div class="scroll-area">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Palavra-chave</th>
+              <th class="num">Volume / mes</th><th class="num">Pos. Mar/2026</th>
+            </tr>
+          </thead>
+          <tbody>{rows_table}</tbody>
+        </table>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Excluidas (ja no Top 5 em Mar/2026)</h2>
+      <p>Estas ja nao precisam de prioridade maxima nesta fila.</p>
+      <table>
+        <thead><tr><th>Palavra-chave</th><th class="num">Volume</th><th class="num">Posicao</th></tr></thead>
+        <tbody>{ex_table}</tbody>
+      </table>
+    </section>
+    """
+
+
 d25 = load(FILE_2025, has_destaque=False)
 d26 = load(FILE_2026, has_destaque=True)
 
@@ -395,6 +522,28 @@ pos_26 = {}
 for r in d26:
     if r["kw"] not in pos_26 or r["pos"] < pos_26[r["kw"]]:
         pos_26[r["kw"]] = r["pos"]
+
+_raw_prox = load_proximas_etapas_tsv(FILE_PROXIMAS)
+prox_inc, prox_exc = split_proximas_etapas(_raw_prox, pos_26)
+n_proximas = len(prox_inc)
+n_prox_src = len(_raw_prox)
+proximas_tab_inner = build_proximas_tab_inner(prox_inc, prox_exc, n_prox_src)
+_prox_top20 = prox_inc[:20]
+
+
+def _prox_chart_label(s, m=44):
+    if len(s) <= m:
+        return s
+    return s[: m - 1] + "\u2026"
+
+
+prox_chart_payload = json.dumps(
+    {
+        "ok": bool(_prox_top20),
+        "labels": [_prox_chart_label(a) for a, _, _ in _prox_top20],
+        "volumes": [b for _, b, _ in _prox_top20],
+    }
+)
 
 common = kws_25 & kws_26
 movers = [(k, pos_25[k], pos_26[k], pos_25[k] - pos_26[k]) for k in common]
@@ -852,6 +1001,10 @@ html = f"""<!DOCTYPE html>
     background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
     box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
   }}
+  .tab-btn.prox.active {{
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+  }}
 </style>
 </head>
 <body>
@@ -872,7 +1025,7 @@ html = f"""<!DOCTYPE html>
     <button class="tab-btn" data-tab="novas">Novas Palavras</button>
     <button class="tab-btn gsc" data-tab="gsc">Search Console <span class="pill">{gsc_pill}</span></button>
     <button class="tab-btn ultras" data-tab="ultrapassados">Ultrapassamos <span class="pill">{n_ultrapassados_termos}</span></button>
-    <button class="tab-btn" data-tab="insights">Insights</button>
+    <button class="tab-btn prox" data-tab="proximas">Proximas Etapas <span class="pill">{n_proximas}</span></button>
   </nav>
 
   <!-- ================== TAB: VISAO GERAL ================== -->
@@ -1127,33 +1280,9 @@ html = f"""<!DOCTYPE html>
     </section>
   </div>
 
-  <!-- ================== TAB: INSIGHTS ================== -->
-  <div class="panel" id="tab-insights">
-    <section class="card">
-      <h2>Insights Estrategicos</h2>
-      <div class="banner success">
-        <strong>Crescimento excepcional:</strong> +{total_26 - total_25} novas palavras rankeadas em 12 meses
-        ({fmt_pct(total_25, total_26)}) indica mudanca estrutural positiva do site.
-      </div>
-      <div class="banner info">
-        <strong>Consolidacao de marca:</strong> A palavra "repediu" conquistou a 1a posicao, confirmando que o Google
-        reconhece o novo branding.
-      </div>
-      <div class="banner gold">
-        <strong>Destaques comerciais:</strong> {dest_bucket["top5"]} das {len(destaques)} palavras estrategicas ja estao no Top 5,
-        gerando alta probabilidade de conversao.
-      </div>
-
-      <h3>Recomendacoes</h3>
-      <ul class="ins">
-        <li><strong>Acelerar destaques no Top 6-20:</strong> existem {dest_bucket["top20"] - dest_bucket["top5"]} palavras de destaque que ainda nao estao no Top 5 &mdash; priorizar link building e otimizacao on-page.</li>
-        <li><strong>Cluster CRM:</strong> termos como "crm para restaurantes" ja estao no Top 2 &mdash; criar hub de conteudo para dominar todas as variacoes.</li>
-        <li><strong>Cluster WhatsApp:</strong> forte performance em "whatsapp business", "lista de transmissao" e "selo verificado" &mdash; ampliar com guias praticos e comparativos.</li>
-        <li><strong>Cluster Delivery:</strong> "plataforma de delivery", "empresas de delivery" e "food marketing" no Top 5 reforcam posicionamento B2B.</li>
-        <li><strong>Monitorar perdas:</strong> analisar pags com queda de ranking para identificar canibalizacao ou queda de autoridade.</li>
-        <li><strong>Expansao Top 100 &rarr; Top 20:</strong> {b26["top100"] - b26["top20"]} palavras entre 21-100 sao o proximo funil de crescimento organico.</li>
-      </ul>
-    </section>
+  <!-- ================== TAB: PROXIMAS ETAPAS ================== -->
+  <div class="panel" id="tab-proximas">
+    {proximas_tab_inner}
   </div>
 
   <footer class="foot">
@@ -1291,12 +1420,45 @@ new Chart(document.getElementById('chartDest'), {{
     }}
   }});
 }})();
+
+(function(){{
+  var px = __PROXIMAS_CHART__;
+  if (!px || !px.ok) return;
+  var elp = document.getElementById('chartProxEtapas');
+  if (!elp) return;
+  new Chart(elp, {{
+    type: 'bar',
+    data: {{
+      labels: px.labels,
+      datasets: [{{
+        label: 'Volume / mes (estim.)',
+        data: px.volumes,
+        backgroundColor: '#f59e0b',
+        borderRadius: 6
+      }}]
+    }},
+    options: {{
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {{
+        legend: {{ display: false }},
+        title: {{ display: true, text: 'Top 20 por volume (fila Proximas etapas)', color: '#e2e8f0', font: {{ size: 13, weight: '600' }} }}
+      }},
+      scales: {{
+        x: {{ beginAtZero: true, grid: {{ color: 'rgba(148, 163, 184, 0.1)' }} }},
+        y: {{ ticks: {{ font: {{ size: 10 }} }}, grid: {{ display: false }} }}
+      }}
+    }}
+  }});
+}})();
 </script>
 </body>
 </html>
 """
 
 html = html.replace("__GSC_JSON__", gsc_chart_payload)
+html = html.replace("__PROXIMAS_CHART__", prox_chart_payload)
 
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(html)
@@ -1325,4 +1487,8 @@ if gsc_data:
     )
 else:
     print(f"[!] Search Console: nao leu {os.path.basename(FILE_GSC)}")
+print(
+    f"[OK] Proximas etapas: {n_proximas} na fila | {len(prox_exc)} excluidas (ja Top 5) | "
+    f"{n_prox_src} termos no TSV"
+)
 print(f"[OK] Arquivo: {OUT}")
