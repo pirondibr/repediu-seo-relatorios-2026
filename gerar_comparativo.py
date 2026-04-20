@@ -76,6 +76,27 @@ def format_pct(old, new):
     return '<span class="flat">0%</span>'
 
 
+def report_nav_html(active: str) -> str:
+    """Links relativos entre relatorios. active: idx|v2|v1|legacy."""
+    links = [
+        ("idx", "index.html", "Indice"),
+        ("v2", "relatorio_v2_destaques_2025_vs_2026.html", "Relatorio v2 (abas)"),
+        ("v1", "relatorio_comparativo_2025_vs_2026.html", "Relatorio v1 (claro)"),
+        ("legacy", "relatorio_repediu_2025_vs_2026.html", "Relatorio legado"),
+    ]
+    parts = ['<nav class="page-links" aria-label="Navegacao entre relatorios">']
+    parts.append('<span class="page-links-title">Relatorios</span>')
+    for key, href, label in links:
+        if key == active:
+            parts.append(
+                f'<a class="is-current" href="{href}" aria-current="page">{label}</a>'
+            )
+        else:
+            parts.append(f'<a href="{href}">{label}</a>')
+    parts.append("</nav>")
+    return "\n  " + "\n  ".join(parts) + "\n"
+
+
 data_2025 = load(FILE_2025)
 data_2026 = load(FILE_2026)
 
@@ -254,10 +275,44 @@ html = f"""<!DOCTYPE html>
 
   .legend-25 {{ color: #e53e3e; font-weight: 700; }}
   .legend-26 {{ color: #667eea; font-weight: 700; }}
+
+  .page-links {{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: #2d3748;
+    border-radius: 12px;
+    font-size: 0.88rem;
+  }}
+  .page-links-title {{
+    color: #a0aec0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+  }}
+  .page-links a {{
+    color: #90cdf4;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }}
+  .page-links a:hover {{ background: rgba(255,255,255,0.08); color: #e2e8f0; }}
+  .page-links a.is-current {{
+    background: rgba(102, 126, 234, 0.45);
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+  }}
 </style>
 </head>
 <body>
 <div class="container">
+{report_nav_html("v1")}
 
   <header>
     <h1>Relatorio SEO Comparativo</h1>

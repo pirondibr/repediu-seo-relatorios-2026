@@ -470,6 +470,27 @@ def dest_rows():
     return "\n".join(out)
 
 
+def report_nav_html(active: str) -> str:
+    """Links relativos entre relatorios (file:// ou servidor local). active: idx|v2|v1|legacy."""
+    links = [
+        ("idx", "index.html", "Indice"),
+        ("v2", "relatorio_v2_destaques_2025_vs_2026.html", "Relatorio v2 (abas)"),
+        ("v1", "relatorio_comparativo_2025_vs_2026.html", "Relatorio v1 (claro)"),
+        ("legacy", "relatorio_repediu_2025_vs_2026.html", "Relatorio legado"),
+    ]
+    parts = ['<nav class="page-links" aria-label="Navegacao entre relatorios">']
+    parts.append('<span class="page-links-title">Relatorios</span>')
+    for key, href, label in links:
+        if key == active:
+            parts.append(
+                f'<a class="is-current" href="{href}" aria-current="page">{label}</a>'
+            )
+        else:
+            parts.append(f'<a href="{href}">{label}</a>')
+    parts.append("</nav>")
+    return "\n  " + "\n  ".join(parts) + "\n"
+
+
 chart_labels = ["Top 1", "Top 3", "Top 5", "Top 10", "Top 20", "Top 50", "Top 100"]
 chart_25 = [b25[k] for k in ["top1","top3","top5","top10","top20","top50","top100"]]
 chart_26 = [b26[k] for k in ["top1","top3","top5","top10","top20","top50","top100"]]
@@ -494,6 +515,8 @@ if gsc_data:
     )
 else:
     gsc_chart_payload = json.dumps({"ok": False})
+
+nav_block = report_nav_html("v2")
 
 html = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -785,6 +808,46 @@ html = f"""<!DOCTYPE html>
   .serp-link:hover {{ text-decoration: underline; color: #7dd3fc; }}
   .trophy {{ font-size: 1.1rem; line-height: 1; }}
 
+  .page-links {{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 0.88rem;
+  }}
+  .page-links-title {{
+    color: var(--muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+  }}
+  .page-links a {{
+    color: #7dd3fc;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }}
+  .page-links a:hover {{
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.25);
+    color: #e0f2fe;
+  }}
+  .page-links a.is-current {{
+    background: rgba(167, 139, 250, 0.35);
+    color: #f8fafc;
+    pointer-events: none;
+    cursor: default;
+    border-color: rgba(167, 139, 250, 0.5);
+  }}
+
   .tab-btn.gsc.active {{
     background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
     box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
@@ -793,6 +856,7 @@ html = f"""<!DOCTYPE html>
 </head>
 <body>
 <div class="container">
+{nav_block}
 
   <header class="hero">
     <h1>Relatorio SEO v2 &mdash; Destaques &amp; Performance</h1>
@@ -1236,6 +1300,19 @@ html = html.replace("__GSC_JSON__", gsc_chart_payload)
 
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(html)
+
+# Copia sem barra de navegacao local para GitHub Pages (pasta /docs, so index.html).
+docs_dir = os.path.join(BASE, "docs")
+os.makedirs(docs_dir, exist_ok=True)
+out_pages = os.path.join(docs_dir, "index.html")
+pages_html = html.replace(nav_block, "", 1)
+with open(out_pages, "w", encoding="utf-8") as f:
+    f.write(pages_html)
+_nojekyll = os.path.join(docs_dir, ".nojekyll")
+if not os.path.isfile(_nojekyll):
+    open(_nojekyll, "w", encoding="utf-8").close()
+
+print(f"[OK] GitHub Pages (docs/index.html): {out_pages}")
 
 print(f"[OK] 2025: {total_25} keywords  |  2026: {total_26} keywords")
 print(f"[OK] Destaques: {len(destaques)} palavras")

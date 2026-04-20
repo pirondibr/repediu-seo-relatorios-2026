@@ -112,6 +112,28 @@ top_caiu = [(k, p25, p26, f"{diff}") for k, p25, p26, diff in mudancas_caiu]
 # Dados estaticos para o chart
 chart_data_json = json.dumps(dados_chart)
 
+
+def report_nav_html(active: str) -> str:
+    """Links relativos entre relatorios. active: idx|v2|v1|legacy."""
+    links = [
+        ("idx", "index.html", "Indice"),
+        ("v2", "relatorio_v2_destaques_2025_vs_2026.html", "Relatorio v2 (abas)"),
+        ("v1", "relatorio_comparativo_2025_vs_2026.html", "Relatorio v1 (claro)"),
+        ("legacy", "relatorio_repediu_2025_vs_2026.html", "Relatorio legado"),
+    ]
+    parts = ['<nav class="page-links" aria-label="Navegacao entre relatorios">']
+    parts.append('<span class="page-links-title">Relatorios</span>')
+    for key, href, label in links:
+        if key == active:
+            parts.append(
+                f'<a class="is-current" href="{href}" aria-current="page">{label}</a>'
+            )
+        else:
+            parts.append(f'<a href="{href}">{label}</a>')
+    parts.append("</nav>")
+    return "\n".join(parts)
+
+
 html = f"""<!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -211,9 +233,41 @@ html = f"""<!DOCTYPE html>
     display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600;
     background: #e0e7ff; color: #3730a3;
   }}
+  .page-links {{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px 0;
+    font-size: 0.88rem;
+  }}
+  .page-links-title {{
+    color: var(--gray);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+  }}
+  .page-links a {{
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }}
+  .page-links a:hover {{ background: #eff6ff; }}
+  .page-links a.is-current {{
+    background: #1a1f2e;
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+  }}
 </style>
 </head>
 <body>
+{report_nav_html("legacy")}
 
 <header>
   <h1>Relatorio SEO - repediu.com.br</h1>

@@ -95,10 +95,52 @@
 
   .legend-25 { color: #e53e3e; font-weight: 700; }
   .legend-26 { color: #667eea; font-weight: 700; }
+
+  .page-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: #2d3748;
+    border-radius: 12px;
+    font-size: 0.88rem;
+  }
+  .page-links-title {
+    color: #a0aec0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+  }
+  .page-links a {
+    color: #90cdf4;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+  .page-links a:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; }
+  .page-links a.is-current {
+    background: rgba(102, 126, 234, 0.45);
+    color: #fff;
+    pointer-events: none;
+    cursor: default;
+  }
 </style>
 </head>
 <body>
 <div class="container">
+
+  <nav class="page-links" aria-label="Navegacao entre relatorios">
+  <span class="page-links-title">Relatorios</span>
+  <a href="index.html">Indice</a>
+  <a href="relatorio_v2_destaques_2025_vs_2026.html">Relatorio v2 (abas)</a>
+  <a class="is-current" href="relatorio_comparativo_2025_vs_2026.html" aria-current="page">Relatorio v1 (claro)</a>
+  <a href="relatorio_repediu_2025_vs_2026.html">Relatorio legado</a>
+  </nav>
+
 
   <header>
     <h1>Relatorio SEO Comparativo</h1>
@@ -393,8 +435,8 @@
 <tr><td>pizzaria em plataforma</td><td class='num'>55</td><td class='num'>32</td><td class='num up'>+23</td></tr>
 <tr><td>ja pediu</td><td class='num'>36</td><td class='num'>16</td><td class='num up'>+20</td></tr>
 <tr><td>comida delivery</td><td class='num'>52</td><td class='num'>34</td><td class='num up'>+18</td></tr>
-<tr><td>matriz rfv</td><td class='num'>24</td><td class='num'>7</td><td class='num up'>+17</td></tr>
 <tr><td>alfalabs</td><td class='num'>23</td><td class='num'>6</td><td class='num up'>+17</td></tr>
+<tr><td>matriz rfv</td><td class='num'>24</td><td class='num'>7</td><td class='num up'>+17</td></tr>
 <tr><td>sistema hamburgueria</td><td class='num'>68</td><td class='num'>54</td><td class='num up'>+14</td></tr>
 <tr><td>sistema de delivery</td><td class='num'>36</td><td class='num'>23</td><td class='num up'>+13</td></tr>
 <tr><td>site de delivery</td><td class='num'>85</td><td class='num'>75</td><td class='num up'>+10</td></tr>
@@ -430,86 +472,86 @@
     <p>Total: <strong>80</strong> novas palavras conquistaram o Top 10.</p>
     <table>
       <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao 2026</th></tr></thead>
-      <tbody><tr><td>1</td><td>food marketing agency</td><td class='num'>1</td></tr>
-<tr><td>2</td><td>repediu</td><td class='num'>1</td></tr>
-<tr><td>3</td><td>repediu login</td><td class='num'>1</td></tr>
-<tr><td>4</td><td>repetiu</td><td class='num'>2</td></tr>
-<tr><td>5</td><td>crm para restaurantes</td><td class='num'>2</td></tr>
-<tr><td>6</td><td>whatsapp business cobra por mensagem</td><td class='num'>2</td></tr>
-<tr><td>7</td><td>lista de transmissão whatsapp business paga</td><td class='num'>3</td></tr>
-<tr><td>8</td><td>selo de verificação whatsapp</td><td class='num'>3</td></tr>
+      <tbody><tr><td>1</td><td>repediu</td><td class='num'>1</td></tr>
+<tr><td>2</td><td>repediu login</td><td class='num'>1</td></tr>
+<tr><td>3</td><td>food marketing agency</td><td class='num'>1</td></tr>
+<tr><td>4</td><td>crm para restaurantes</td><td class='num'>2</td></tr>
+<tr><td>5</td><td>whatsapp business cobra por mensagem</td><td class='num'>2</td></tr>
+<tr><td>6</td><td>repetiu</td><td class='num'>2</td></tr>
+<tr><td>7</td><td>selo de verificação whatsapp</td><td class='num'>3</td></tr>
+<tr><td>8</td><td>food marketing</td><td class='num'>3</td></tr>
 <tr><td>9</td><td>deliveres</td><td class='num'>3</td></tr>
-<tr><td>10</td><td>food marketing</td><td class='num'>3</td></tr>
-<tr><td>11</td><td>whatsapp business é pago</td><td class='num'>4</td></tr>
-<tr><td>12</td><td>fundamentos do marketing digital google ateliê digital</td><td class='num'>4</td></tr>
-<tr><td>13</td><td>empresas de delivery</td><td class='num'>4</td></tr>
-<tr><td>14</td><td>lista de transmissão whatsapp agora é paga</td><td class='num'>4</td></tr>
+<tr><td>10</td><td>lista de transmissão whatsapp business paga</td><td class='num'>3</td></tr>
+<tr><td>11</td><td>lista de transmissão whatsapp agora é paga</td><td class='num'>4</td></tr>
+<tr><td>12</td><td>verificado whatsapp</td><td class='num'>4</td></tr>
+<tr><td>13</td><td>o whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td>14</td><td>fundamentos do marketing digital google ateliê digital</td><td class='num'>4</td></tr>
 <tr><td>15</td><td>whatsapp verificado</td><td class='num'>4</td></tr>
-<tr><td>16</td><td>conta verificada whatsapp</td><td class='num'>4</td></tr>
-<tr><td>17</td><td>como ter o selo de verificação no whatsapp business</td><td class='num'>4</td></tr>
-<tr><td>18</td><td>cardapio digital que integre com a saipos</td><td class='num'>4</td></tr>
-<tr><td>19</td><td>verificado whatsapp</td><td class='num'>4</td></tr>
-<tr><td>20</td><td>o whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td>16</td><td>cardapio digital que integre com a saipos</td><td class='num'>4</td></tr>
+<tr><td>17</td><td>empresas de delivery</td><td class='num'>4</td></tr>
+<tr><td>18</td><td>conta verificada whatsapp</td><td class='num'>4</td></tr>
+<tr><td>19</td><td>como ter o selo de verificação no whatsapp business</td><td class='num'>4</td></tr>
+<tr><td>20</td><td>whatsapp business é pago</td><td class='num'>4</td></tr>
 <tr><td>21</td><td>quanto custa o whatsapp business</td><td class='num'>4</td></tr>
 <tr><td>22</td><td>selo verificado whatsapp</td><td class='num'>5</td></tr>
 <tr><td>23</td><td>lista de transmissão whatsapp business agora é pago</td><td class='num'>5</td></tr>
-<tr><td>24</td><td>madero oscar freire</td><td class='num'>5</td></tr>
-<tr><td>25</td><td>foodservice marketing</td><td class='num'>5</td></tr>
-<tr><td>26</td><td>v4 food</td><td class='num'>5</td></tr>
+<tr><td>24</td><td>cnpj repediu</td><td class='num'>5</td></tr>
+<tr><td>25</td><td>v4 food</td><td class='num'>5</td></tr>
+<tr><td>26</td><td>madero oscar freire</td><td class='num'>5</td></tr>
 <tr><td>27</td><td>sulserve 2025</td><td class='num'>5</td></tr>
-<tr><td>28</td><td>delivery brasil</td><td class='num'>5</td></tr>
-<tr><td>29</td><td>verificado no whatsapp</td><td class='num'>5</td></tr>
-<tr><td>30</td><td>whatsapp business verificado</td><td class='num'>5</td></tr>
-<tr><td>31</td><td>cnpj repediu</td><td class='num'>5</td></tr>
-<tr><td>32</td><td>rfv significado</td><td class='num'>6</td></tr>
-<tr><td>33</td><td>selo azul whatsapp</td><td class='num'>6</td></tr>
-<tr><td>34</td><td>onbeef</td><td class='num'>6</td></tr>
-<tr><td>35</td><td>metaverified</td><td class='num'>6</td></tr>
+<tr><td>28</td><td>whatsapp business verificado</td><td class='num'>5</td></tr>
+<tr><td>29</td><td>delivery brasil</td><td class='num'>5</td></tr>
+<tr><td>30</td><td>foodservice marketing</td><td class='num'>5</td></tr>
+<tr><td>31</td><td>verificado no whatsapp</td><td class='num'>5</td></tr>
+<tr><td>32</td><td>metaverified</td><td class='num'>6</td></tr>
+<tr><td>33</td><td>rfv significado</td><td class='num'>6</td></tr>
+<tr><td>34</td><td>selo azul whatsapp</td><td class='num'>6</td></tr>
+<tr><td>35</td><td>meta verified whatsapp</td><td class='num'>6</td></tr>
 <tr><td>36</td><td>goomer delivery</td><td class='num'>6</td></tr>
-<tr><td>37</td><td>preço whatsapp business</td><td class='num'>6</td></tr>
-<tr><td>38</td><td>lista de transmissão whatsapp agora é pago</td><td class='num'>6</td></tr>
-<tr><td>39</td><td>meta verified whatsapp</td><td class='num'>6</td></tr>
-<tr><td>40</td><td>prefiro delivery</td><td class='num'>7</td></tr>
-<tr><td>41</td><td>acelera food nation</td><td class='num'>7</td></tr>
-<tr><td>42</td><td>cardápio web planos</td><td class='num'>7</td></tr>
-<tr><td>43</td><td>meta verified whatsapp business</td><td class='num'>7</td></tr>
-<tr><td>44</td><td>google ateliê digital fundamentos do marketing digital</td><td class='num'>7</td></tr>
-<tr><td>45</td><td>whatsapp delivery</td><td class='num'>7</td></tr>
-<tr><td>46</td><td>como colocar verificado no whatsapp</td><td class='num'>7</td></tr>
-<tr><td>47</td><td>verified whatsapp</td><td class='num'>7</td></tr>
-<tr><td>48</td><td>marketing for food service</td><td class='num'>7</td></tr>
-<tr><td>49</td><td>degusta ai</td><td class='num'>7</td></tr>
-<tr><td>50</td><td>winfood</td><td class='num'>8</td></tr>
-<tr><td>51</td><td>happy pizza goiania</td><td class='num'>8</td></tr>
-<tr><td>52</td><td>bitbar online</td><td class='num'>8</td></tr>
-<tr><td>53</td><td>dia do barman</td><td class='num'>8</td></tr>
+<tr><td>37</td><td>lista de transmissão whatsapp agora é pago</td><td class='num'>6</td></tr>
+<tr><td>38</td><td>preço whatsapp business</td><td class='num'>6</td></tr>
+<tr><td>39</td><td>onbeef</td><td class='num'>6</td></tr>
+<tr><td>40</td><td>cardápio web planos</td><td class='num'>7</td></tr>
+<tr><td>41</td><td>como colocar verificado no whatsapp</td><td class='num'>7</td></tr>
+<tr><td>42</td><td>degusta ai</td><td class='num'>7</td></tr>
+<tr><td>43</td><td>google ateliê digital fundamentos do marketing digital</td><td class='num'>7</td></tr>
+<tr><td>44</td><td>whatsapp delivery</td><td class='num'>7</td></tr>
+<tr><td>45</td><td>meta verified whatsapp business</td><td class='num'>7</td></tr>
+<tr><td>46</td><td>verified whatsapp</td><td class='num'>7</td></tr>
+<tr><td>47</td><td>acelera food nation</td><td class='num'>7</td></tr>
+<tr><td>48</td><td>prefiro delivery</td><td class='num'>7</td></tr>
+<tr><td>49</td><td>marketing for food service</td><td class='num'>7</td></tr>
+<tr><td>50</td><td>dia do barman</td><td class='num'>8</td></tr>
+<tr><td>51</td><td>bitbar online</td><td class='num'>8</td></tr>
+<tr><td>52</td><td>bourdain chef</td><td class='num'>8</td></tr>
+<tr><td>53</td><td>happy pizza goiania</td><td class='num'>8</td></tr>
 <tr><td>54</td><td>meta verificado</td><td class='num'>8</td></tr>
-<tr><td>55</td><td>selo whatsapp</td><td class='num'>8</td></tr>
-<tr><td>56</td><td>bourdain chef</td><td class='num'>8</td></tr>
+<tr><td>55</td><td>winfood</td><td class='num'>8</td></tr>
+<tr><td>56</td><td>selo whatsapp</td><td class='num'>8</td></tr>
 <tr><td>57</td><td>goomer cardapio</td><td class='num'>9</td></tr>
-<tr><td>58</td><td>2biz</td><td class='num'>9</td></tr>
-<tr><td>59</td><td>natural tech 2025</td><td class='num'>9</td></tr>
-<tr><td>60</td><td>festival gastronomia preta</td><td class='num'>9</td></tr>
-<tr><td>61</td><td>marketing para delivery</td><td class='num'>9</td></tr>
+<tr><td>58</td><td>analise rfv</td><td class='num'>9</td></tr>
+<tr><td>59</td><td>assinar meta verified whatsapp</td><td class='num'>9</td></tr>
+<tr><td>60</td><td>meta verified whatsapp valor</td><td class='num'>9</td></tr>
+<tr><td>61</td><td>festival gastronomia preta</td><td class='num'>9</td></tr>
 <tr><td>62</td><td>pedidu</td><td class='num'>9</td></tr>
-<tr><td>63</td><td>analise rfv</td><td class='num'>9</td></tr>
-<tr><td>64</td><td>o que taxa de franquia</td><td class='num'>9</td></tr>
-<tr><td>65</td><td>assinar meta verified whatsapp</td><td class='num'>9</td></tr>
-<tr><td>66</td><td>meta verified whatsapp valor</td><td class='num'>9</td></tr>
-<tr><td>67</td><td>valor whatsapp business</td><td class='num'>10</td></tr>
-<tr><td>68</td><td>marketing para restaurantes</td><td class='num'>10</td></tr>
-<tr><td>69</td><td>plataforma delivery</td><td class='num'>10</td></tr>
-<tr><td>70</td><td>reengajar</td><td class='num'>10</td></tr>
-<tr><td>71</td><td>como verificar whatsapp business</td><td class='num'>10</td></tr>
-<tr><td>72</td><td>pedido aqui</td><td class='num'>10</td></tr>
-<tr><td>73</td><td>antoine bourdain</td><td class='num'>10</td></tr>
-<tr><td>74</td><td>cityfoods</td><td class='num'>10</td></tr>
-<tr><td>75</td><td>fispal food service 2025 data</td><td class='num'>10</td></tr>
-<tr><td>76</td><td>defina conosco</td><td class='num'>10</td></tr>
-<tr><td>77</td><td>onbeef login</td><td class='num'>10</td></tr>
-<tr><td>78</td><td>whatsapp cobrando lista de transmissão</td><td class='num'>10</td></tr>
-<tr><td>79</td><td>verificado azul</td><td class='num'>10</td></tr>
-<tr><td>80</td><td>chef bourdain</td><td class='num'>10</td></tr></tbody>
+<tr><td>63</td><td>2biz</td><td class='num'>9</td></tr>
+<tr><td>64</td><td>natural tech 2025</td><td class='num'>9</td></tr>
+<tr><td>65</td><td>o que taxa de franquia</td><td class='num'>9</td></tr>
+<tr><td>66</td><td>marketing para delivery</td><td class='num'>9</td></tr>
+<tr><td>67</td><td>onbeef login</td><td class='num'>10</td></tr>
+<tr><td>68</td><td>antoine bourdain</td><td class='num'>10</td></tr>
+<tr><td>69</td><td>whatsapp cobrando lista de transmissão</td><td class='num'>10</td></tr>
+<tr><td>70</td><td>defina conosco</td><td class='num'>10</td></tr>
+<tr><td>71</td><td>chef bourdain</td><td class='num'>10</td></tr>
+<tr><td>72</td><td>fispal food service 2025 data</td><td class='num'>10</td></tr>
+<tr><td>73</td><td>marketing para restaurantes</td><td class='num'>10</td></tr>
+<tr><td>74</td><td>verificado azul</td><td class='num'>10</td></tr>
+<tr><td>75</td><td>como verificar whatsapp business</td><td class='num'>10</td></tr>
+<tr><td>76</td><td>reengajar</td><td class='num'>10</td></tr>
+<tr><td>77</td><td>plataforma delivery</td><td class='num'>10</td></tr>
+<tr><td>78</td><td>cityfoods</td><td class='num'>10</td></tr>
+<tr><td>79</td><td>valor whatsapp business</td><td class='num'>10</td></tr>
+<tr><td>80</td><td>pedido aqui</td><td class='num'>10</td></tr></tbody>
     </table>
   </section>
 
@@ -526,7 +568,7 @@
   </section>
 
   <footer>
-    Relatorio gerado automaticamente em 20/04/2026 09:42 &middot;
+    Relatorio gerado automaticamente em 20/04/2026 10:54 &middot;
     Fonte: exports Semrush (marco 2025 e marco 2026)
   </footer>
 
