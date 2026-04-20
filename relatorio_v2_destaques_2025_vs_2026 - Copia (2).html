@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatorio SEO v2 - Repediu | Destaques + Comparativo 2025 vs 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-2: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-2: #a78bfa;
+    --gold: #fbbf24;
+    --green: #10b981;
+    --red: #ef4444;
+    --border: #334155;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 30px 20px; }
+
+  header.hero {
+    background: radial-gradient(circle at top left, #1e3a8a 0%, transparent 50%),
+                radial-gradient(circle at bottom right, #7c3aed 0%, transparent 50%),
+                #0f172a;
+    padding: 60px 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero .domain { font-size: 1.3rem; color: var(--accent); font-weight: 600; }
+  .hero .sub { color: var(--muted); margin-top: 8px; font-size: 1rem; }
+
+  nav.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    background: var(--panel);
+    padding: 6px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-size: 0.93rem;
+    font-family: inherit;
+  }
+  .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: #0f172a;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+  }
+  .tab-btn .pill {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .tab-btn.active .pill { background: rgba(255,255,255,0.25); color: #0f172a; }
+  .tab-btn.gold.active { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4); }
+
+  .panel { display: none; animation: fadeIn 0.3s; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  section.card {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 22px;
+    border: 1px solid var(--border);
+  }
+  section.card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section.card h2::before {
+    content: '';
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-radius: 3px;
+  }
+  section.card h3 { color: #fff; font-size: 1.1rem; margin: 22px 0 12px; }
+  section.card p { color: var(--muted); margin-bottom: 10px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(167,139,250,0.08) 100%);
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat.gold { background: linear-gradient(135deg, rgba(251,191,36,0.12) 0%, rgba(245,158,11,0.08) 100%); border-color: rgba(251,191,36,0.3); }
+  .stat .label { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .stat .val { font-size: 2.3rem; font-weight: 800; color: #fff; margin-top: 6px; line-height: 1; }
+  .stat .sub { font-size: 0.85rem; margin-top: 10px; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  th {
+    background: rgba(0,0,0,0.25);
+    color: var(--muted);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  td { color: var(--text); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  td.idx { color: var(--muted); width: 40px; font-size: 0.85rem; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .up { color: var(--green); font-weight: 700; }
+  .down { color: var(--red); font-weight: 700; }
+  .flat { color: var(--muted); }
+  .star { color: var(--gold); font-size: 1rem; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--accent-2);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+  }
+
+  .chart-wrap { position: relative; height: 420px; margin-top: 16px; }
+  .chart-wrap.sm { height: 320px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 820px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+  }
+
+  .banner {
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid;
+  }
+  .banner.success {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #a7f3d0;
+  }
+  .banner.info {
+    background: rgba(56, 189, 248, 0.08);
+    border-color: rgba(56, 189, 248, 0.3);
+    color: #bae6fd;
+  }
+  .banner.gold {
+    background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(245,158,11,0.05) 100%);
+    border-color: rgba(251,191,36,0.35);
+    color: #fde68a;
+  }
+  .banner strong { color: #fff; }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 16px 0;
+  }
+  @media (max-width: 720px) { .kpi-row { grid-template-columns: 1fr; } }
+  .kpi {
+    background: rgba(0,0,0,0.25);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .kpi .k { color: var(--muted); font-size: 0.8rem; }
+  .kpi .v { color: #fff; font-size: 1.6rem; font-weight: 800; margin-top: 4px; }
+
+  ul.ins { padding-left: 20px; line-height: 2; }
+  ul.ins li { color: var(--text); }
+  ul.ins li strong { color: var(--accent); }
+
+  footer.foot {
+    text-align: center;
+    color: var(--muted);
+    padding: 26px;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  .scroll-area { max-height: 520px; overflow-y: auto; border-radius: 10px; }
+  .scroll-area::-webkit-scrollbar { width: 8px; }
+  .scroll-area::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
+  .scroll-area::-webkit-scrollbar-thumb { background: var(--panel-2); border-radius: 4px; }
+
+  .tab-btn.ultras.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  }
+  .serp-block {
+    margin-bottom: 28px;
+    padding: 22px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .serp-term-title {
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+  .serp-term-title strong { color: #38bdf8; }
+  .serp-results { list-style: none; padding: 0; margin: 0; }
+  .serp-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+  }
+  .serp-line.ours {
+    border-color: rgba(251, 191, 36, 0.55);
+    background: linear-gradient(90deg, rgba(251,191,36,0.12) 0%, rgba(15,23,42,0.4) 100%);
+  }
+  .serp-rank {
+    flex-shrink: 0;
+    min-width: 42px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .serp-line.ours .serp-rank { color: #fbbf24; }
+  .serp-cell { flex: 1; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .serp-link { color: var(--accent); font-weight: 600; text-decoration: none; word-break: break-all; }
+  .serp-link:hover { text-decoration: underline; color: #7dd3fc; }
+  .trophy { font-size: 1.1rem; line-height: 1; }
+
+  .tab-btn.gsc.active {
+    background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <h1>Relatorio SEO v2 &mdash; Destaques &amp; Performance</h1>
+    <div class="domain">repediu.com.br</div>
+    <div class="sub">Marco 2025 vs Marco 2026 &middot; 22 palavras em destaque</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="visao">Visao Geral</button>
+    <button class="tab-btn gold" data-tab="destaques">&#9733; Destaques <span class="pill">22</span></button>
+    <button class="tab-btn" data-tab="top">Top 1 / 5 / 10</button>
+    <button class="tab-btn" data-tab="movers">Ganhos &amp; Perdas</button>
+    <button class="tab-btn" data-tab="novas">Novas Palavras</button>
+    <button class="tab-btn gsc" data-tab="gsc">Search Console <span class="pill">1.802</span></button>
+    <button class="tab-btn ultras" data-tab="ultrapassados">Ultrapassamos <span class="pill">1</span></button>
+    <button class="tab-btn" data-tab="insights">Insights</button>
+  </nav>
+
+  <!-- ================== TAB: VISAO GERAL ================== -->
+  <div class="panel active" id="tab-visao">
+
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Total de Keywords</div>
+        <div class="val">804</div>
+        <div class="sub"><span class="up">+624</span> &middot; <span class="up">+347%</span> vs 2025</div>
+      </div>
+      <div class="stat">
+        <div class="label">Top 1</div>
+        <div class="val">3</div>
+        <div class="sub"><span class="up">+3</span> vs 0 em 2025</div>
+      </div>
+      <div class="stat">
+        <div class="label">Top 5</div>
+        <div class="val">36</div>
+        <div class="sub"><span class="up">+34</span> vs 2 em 2025</div>
+      </div>
+      <div class="stat">
+        <div class="label">Top 10</div>
+        <div class="val">101</div>
+        <div class="sub"><span class="up">+89</span> vs 12 em 2025</div>
+      </div>
+      <div class="stat gold">
+        <div class="label">&#9733; Destaques</div>
+        <div class="val">22</div>
+        <div class="sub">Palavras estrategicas monitoradas</div>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Resumo Executivo</h2>
+      <div class="banner success">
+        Em 12 meses, <strong>repediu.com.br</strong> passou de <strong>180</strong> para <strong>804</strong>
+        palavras rankeadas (<span class="up">+347%</span>), com <strong>3</strong> palavras em 1a posicao
+        (antes 0) e <strong>101</strong> palavras no Top 10 (antes 12).
+      </div>
+      <div class="banner gold">
+        <strong>&#9733; 22 palavras de destaque</strong> foram selecionadas para acompanhamento estrategico.
+        Destas, <strong>7</strong> ja estao no Top 5 e <strong>13</strong> no Top 10.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Distribuicao por Faixa de Posicao</h2>
+      <div class="chart-wrap">
+        <canvas id="chartBars"></canvas>
+      </div>
+      <table style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Faixa</th>
+            <th class="num">Mar/2025</th>
+            <th class="num">Mar/2026</th>
+            <th class="num">Delta</th>
+            <th class="num">Variacao %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Top 1</td><td class="num">0</td><td class="num">3</td><td class="num"><span class="up">+3</span></td><td class="num"><span class="up">NOVO</span></td></tr>
+          <tr><td>Top 3</td><td class="num">0</td><td class="num">13</td><td class="num"><span class="up">+13</span></td><td class="num"><span class="up">NOVO</span></td></tr>
+          <tr><td>Top 5</td><td class="num">2</td><td class="num">36</td><td class="num"><span class="up">+34</span></td><td class="num"><span class="up">+1700%</span></td></tr>
+          <tr><td>Top 10</td><td class="num">12</td><td class="num">101</td><td class="num"><span class="up">+89</span></td><td class="num"><span class="up">+742%</span></td></tr>
+          <tr><td>Top 20</td><td class="num">41</td><td class="num">209</td><td class="num"><span class="up">+168</span></td><td class="num"><span class="up">+410%</span></td></tr>
+          <tr><td>Top 50</td><td class="num">115</td><td class="num">495</td><td class="num"><span class="up">+380</span></td><td class="num"><span class="up">+330%</span></td></tr>
+          <tr><td>Top 100</td><td class="num">180</td><td class="num">804</td><td class="num"><span class="up">+624</span></td><td class="num"><span class="up">+347%</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Comparativo Top 1 / Top 5 / Top 10</h2>
+      <div class="chart-wrap sm">
+        <canvas id="chartKey"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== TAB: DESTAQUES ================== -->
+  <div class="panel" id="tab-destaques">
+    <section class="card">
+      <h2>&#9733; Palavras-Chave em Destaque</h2>
+      <p>Total: <strong>22</strong> palavras marcadas como estrategicas para o negocio.</p>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="k">Top 1</div><div class="v">1</div></div>
+        <div class="kpi"><div class="k">Top 3</div><div class="v">4</div></div>
+        <div class="kpi"><div class="k">Top 5</div><div class="v">7</div></div>
+        <div class="kpi"><div class="k">Top 10</div><div class="v">13</div></div>
+        <div class="kpi"><div class="k">Top 20</div><div class="v">22</div></div>
+        <div class="kpi"><div class="k">Novas em 2026</div><div class="v">21</div></div>
+      </div>
+
+      <div class="banner gold">
+        Das <strong>22</strong> palavras em destaque, <strong>13</strong> (59%)
+        ja estao no Top 10 e <strong>7</strong> (32%) no Top 5.
+      </div>
+
+      <h3>Lista completa de destaques com comparativo</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Palavra-Chave</th>
+            <th class="num">Pos. 2025</th>
+            <th class="num">Pos. 2026</th>
+            <th class="num">Delta</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody><tr><td><span class='star'>&#9733;</span> food marketing agency</td><td class='num flat'>—</td><td class='num'><strong>1</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> crm para restaurantes</td><td class='num flat'>—</td><td class='num'><strong>2</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> food marketing</td><td class='num flat'>—</td><td class='num'><strong>3</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> deliveres</td><td class='num flat'>—</td><td class='num'><strong>3</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> empresas de delivery</td><td class='num flat'>—</td><td class='num'><strong>4</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> cardapio digital que integre com a saipos</td><td class='num flat'>—</td><td class='num'><strong>4</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> foodservice marketing</td><td class='num flat'>—</td><td class='num'><strong>5</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing for food service</td><td class='num flat'>—</td><td class='num'><strong>7</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> cardápio web planos</td><td class='num flat'>—</td><td class='num'><strong>7</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> plataforma de delivery</td><td class='num'>35</td><td class='num'><strong>9</strong></td><td class='num up'>+26</td><td><span class='badge'>Em ambos</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing para delivery</td><td class='num flat'>—</td><td class='num'><strong>9</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing para restaurantes</td><td class='num flat'>—</td><td class='num'><strong>10</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> plataforma delivery</td><td class='num flat'>—</td><td class='num'><strong>10</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> o que é hamburguer artesanal</td><td class='num flat'>—</td><td class='num'><strong>12</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing para hamburgueria</td><td class='num flat'>—</td><td class='num'><strong>13</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing for food business</td><td class='num flat'>—</td><td class='num'><strong>14</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> sistema para restaurante delivery</td><td class='num flat'>—</td><td class='num'><strong>15</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> marketing para delivery</td><td class='num flat'>—</td><td class='num'><strong>17</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> restaurant marketing agency</td><td class='num flat'>—</td><td class='num'><strong>18</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> software para pizzaria</td><td class='num flat'>—</td><td class='num'><strong>19</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> food marketing</td><td class='num flat'>—</td><td class='num'><strong>19</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr>
+<tr><td><span class='star'>&#9733;</span> sistema restaurantes</td><td class='num flat'>—</td><td class='num'><strong>20</strong></td><td class='num up'>NOVA</td><td><span class='badge'>Nova em 2026</span></td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Distribuicao das Palavras de Destaque</h2>
+      <div class="chart-wrap sm">
+        <canvas id="chartDest"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== TAB: TOP ================== -->
+  <div class="panel" id="tab-top">
+    <section class="card">
+      <h2>Top 1 &mdash; Posicao #1 em Marco/2026</h2>
+      <p>3 palavras ocupam a 1a posicao (em 2025 eram 0).</p>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>repediu</td><td class='num'>1</td></tr>
+<tr><td class='idx'>2</td><td><span class="star" title="Destaque">&#9733;</span> food marketing agency</td><td class='num'>1</td></tr>
+<tr><td class='idx'>3</td><td>repediu login</td><td class='num'>1</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Top 5 &mdash; Posicoes 2 a 5 (Mar/2026)</h2>
+      <p>33 palavras entre as posicoes 2 e 5.</p>
+      <h3>Posicoes 2 e 3</h3>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>repetiu</td><td class='num'>2</td></tr>
+<tr><td class='idx'>2</td><td>repitiu</td><td class='num'>2</td></tr>
+<tr><td class='idx'>3</td><td>repediu login</td><td class='num'>2</td></tr>
+<tr><td class='idx'>4</td><td><span class="star" title="Destaque">&#9733;</span> crm para restaurantes</td><td class='num'>2</td></tr>
+<tr><td class='idx'>5</td><td>whatsapp business cobra por mensagem</td><td class='num'>2</td></tr>
+<tr><td class='idx'>6</td><td><span class="star" title="Destaque">&#9733;</span> food marketing</td><td class='num'>3</td></tr>
+<tr><td class='idx'>7</td><td>repediu login</td><td class='num'>3</td></tr>
+<tr><td class='idx'>8</td><td>lista de transmissão whatsapp business paga</td><td class='num'>3</td></tr>
+<tr><td class='idx'>9</td><td>selo de verificação whatsapp</td><td class='num'>3</td></tr>
+<tr><td class='idx'>10</td><td><span class="star" title="Destaque">&#9733;</span> deliveres</td><td class='num'>3</td></tr></tbody>
+      </table>
+      <h3>Posicoes 4 e 5</h3>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>repediu login</td><td class='num'>4</td></tr>
+<tr><td class='idx'>2</td><td>lista de transmissão whatsapp agora é paga</td><td class='num'>4</td></tr>
+<tr><td class='idx'>3</td><td><span class="star" title="Destaque">&#9733;</span> empresas de delivery</td><td class='num'>4</td></tr>
+<tr><td class='idx'>4</td><td>fundamentos do marketing digital google ateliê digital</td><td class='num'>4</td></tr>
+<tr><td class='idx'>5</td><td>whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td class='idx'>6</td><td>whatsapp verificado</td><td class='num'>4</td></tr>
+<tr><td class='idx'>7</td><td><span class="star" title="Destaque">&#9733;</span> cardapio digital que integre com a saipos</td><td class='num'>4</td></tr>
+<tr><td class='idx'>8</td><td>verificado whatsapp</td><td class='num'>4</td></tr>
+<tr><td class='idx'>9</td><td>quanto custa o whatsapp business</td><td class='num'>4</td></tr>
+<tr><td class='idx'>10</td><td>como ter o selo de verificação no whatsapp business</td><td class='num'>4</td></tr>
+<tr><td class='idx'>11</td><td>conta verificada whatsapp</td><td class='num'>4</td></tr>
+<tr><td class='idx'>12</td><td>o whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td class='idx'>13</td><td>cnpj repediu</td><td class='num'>5</td></tr>
+<tr><td class='idx'>14</td><td>repediu login</td><td class='num'>5</td></tr>
+<tr><td class='idx'>15</td><td>delivery brasil</td><td class='num'>5</td></tr>
+<tr><td class='idx'>16</td><td>lista de transmissão whatsapp business agora é pago</td><td class='num'>5</td></tr>
+<tr><td class='idx'>17</td><td><span class="star" title="Destaque">&#9733;</span> foodservice marketing</td><td class='num'>5</td></tr>
+<tr><td class='idx'>18</td><td>whatsapp business verificado</td><td class='num'>5</td></tr>
+<tr><td class='idx'>19</td><td>madero oscar freire</td><td class='num'>5</td></tr>
+<tr><td class='idx'>20</td><td>selo verificado whatsapp</td><td class='num'>5</td></tr>
+<tr><td class='idx'>21</td><td>sulserve 2025</td><td class='num'>5</td></tr>
+<tr><td class='idx'>22</td><td>v4 food</td><td class='num'>5</td></tr>
+<tr><td class='idx'>23</td><td>verificado no whatsapp</td><td class='num'>5</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Top 10 &mdash; Posicoes 6 a 10 (Mar/2026)</h2>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>cnpj repediu</td><td class='num'>6</td></tr>
+<tr><td class='idx'>2</td><td>alfalabs</td><td class='num'>6</td></tr>
+<tr><td class='idx'>3</td><td>meta verified whatsapp</td><td class='num'>6</td></tr>
+<tr><td class='idx'>4</td><td>repediu login</td><td class='num'>6</td></tr>
+<tr><td class='idx'>5</td><td>onbeef</td><td class='num'>6</td></tr>
+<tr><td class='idx'>6</td><td>rfv significado</td><td class='num'>6</td></tr>
+<tr><td class='idx'>7</td><td>goomer delivery</td><td class='num'>6</td></tr>
+<tr><td class='idx'>8</td><td>preço whatsapp business</td><td class='num'>6</td></tr>
+<tr><td class='idx'>9</td><td>lista de transmissão whatsapp agora é pago</td><td class='num'>6</td></tr>
+<tr><td class='idx'>10</td><td>metaverified</td><td class='num'>6</td></tr>
+<tr><td class='idx'>11</td><td>selo azul whatsapp</td><td class='num'>6</td></tr>
+<tr><td class='idx'>12</td><td>pizzaria rebeca</td><td class='num'>7</td></tr>
+<tr><td class='idx'>13</td><td>cnpj repediu</td><td class='num'>7</td></tr>
+<tr><td class='idx'>14</td><td>matriz rfv</td><td class='num'>7</td></tr>
+<tr><td class='idx'>15</td><td>repediu login</td><td class='num'>7</td></tr>
+<tr><td class='idx'>16</td><td>repitiu</td><td class='num'>7</td></tr>
+<tr><td class='idx'>17</td><td><span class="star" title="Destaque">&#9733;</span> marketing for food service</td><td class='num'>7</td></tr>
+<tr><td class='idx'>18</td><td>google ateliê digital fundamentos do marketing digital</td><td class='num'>7</td></tr>
+<tr><td class='idx'>19</td><td>prefiro delivery</td><td class='num'>7</td></tr>
+<tr><td class='idx'>20</td><td>whatsapp delivery</td><td class='num'>7</td></tr>
+<tr><td class='idx'>21</td><td>como colocar verificado no whatsapp</td><td class='num'>7</td></tr>
+<tr><td class='idx'>22</td><td>degusta ai</td><td class='num'>7</td></tr>
+<tr><td class='idx'>23</td><td><span class="star" title="Destaque">&#9733;</span> cardápio web planos</td><td class='num'>7</td></tr>
+<tr><td class='idx'>24</td><td>verified whatsapp</td><td class='num'>7</td></tr>
+<tr><td class='idx'>25</td><td>acelera food nation</td><td class='num'>7</td></tr>
+<tr><td class='idx'>26</td><td>meta verified whatsapp business</td><td class='num'>7</td></tr>
+<tr><td class='idx'>27</td><td>cnpj repediu</td><td class='num'>8</td></tr>
+<tr><td class='idx'>28</td><td>bourdain chef</td><td class='num'>8</td></tr>
+<tr><td class='idx'>29</td><td>bitbar online</td><td class='num'>8</td></tr>
+<tr><td class='idx'>30</td><td>repediu login</td><td class='num'>8</td></tr>
+<tr><td class='idx'>31</td><td>winfood</td><td class='num'>8</td></tr>
+<tr><td class='idx'>32</td><td>dia do barman</td><td class='num'>8</td></tr>
+<tr><td class='idx'>33</td><td>happy pizza goiania</td><td class='num'>8</td></tr>
+<tr><td class='idx'>34</td><td>selo whatsapp</td><td class='num'>8</td></tr>
+<tr><td class='idx'>35</td><td>degusta ai</td><td class='num'>8</td></tr>
+<tr><td class='idx'>36</td><td>meta verificado</td><td class='num'>8</td></tr>
+<tr><td class='idx'>37</td><td>natural tech 2025</td><td class='num'>9</td></tr>
+<tr><td class='idx'>38</td><td><span class="star" title="Destaque">&#9733;</span> plataforma de delivery</td><td class='num'>9</td></tr>
+<tr><td class='idx'>39</td><td><span class="star" title="Destaque">&#9733;</span> marketing para delivery</td><td class='num'>9</td></tr>
+<tr><td class='idx'>40</td><td>goomer cardapio</td><td class='num'>9</td></tr>
+<tr><td class='idx'>41</td><td>meta verified whatsapp valor</td><td class='num'>9</td></tr>
+<tr><td class='idx'>42</td><td>o que taxa de franquia</td><td class='num'>9</td></tr>
+<tr><td class='idx'>43</td><td>2biz</td><td class='num'>9</td></tr>
+<tr><td class='idx'>44</td><td>pedidu</td><td class='num'>9</td></tr>
+<tr><td class='idx'>45</td><td>assinar meta verified whatsapp</td><td class='num'>9</td></tr>
+<tr><td class='idx'>46</td><td>festival gastronomia preta</td><td class='num'>9</td></tr>
+<tr><td class='idx'>47</td><td>analise rfv</td><td class='num'>9</td></tr>
+<tr><td class='idx'>48</td><td>defina conosco</td><td class='num'>10</td></tr>
+<tr><td class='idx'>49</td><td>chef bourdain</td><td class='num'>10</td></tr>
+<tr><td class='idx'>50</td><td>alfalabs</td><td class='num'>10</td></tr>
+<tr><td class='idx'>51</td><td>reengajar</td><td class='num'>10</td></tr>
+<tr><td class='idx'>52</td><td>jota ja</td><td class='num'>10</td></tr>
+<tr><td class='idx'>53</td><td>repediu login</td><td class='num'>10</td></tr>
+<tr><td class='idx'>54</td><td><span class="star" title="Destaque">&#9733;</span> marketing para restaurantes</td><td class='num'>10</td></tr>
+<tr><td class='idx'>55</td><td>verificado azul</td><td class='num'>10</td></tr>
+<tr><td class='idx'>56</td><td>cityfoods</td><td class='num'>10</td></tr>
+<tr><td class='idx'>57</td><td><span class="star" title="Destaque">&#9733;</span> plataforma delivery</td><td class='num'>10</td></tr>
+<tr><td class='idx'>58</td><td>selo whatsapp</td><td class='num'>10</td></tr>
+<tr><td class='idx'>59</td><td>fispal food service 2025 data</td><td class='num'>10</td></tr>
+<tr><td class='idx'>60</td><td>pedido aqui</td><td class='num'>10</td></tr>
+<tr><td class='idx'>61</td><td>antoine bourdain</td><td class='num'>10</td></tr>
+<tr><td class='idx'>62</td><td>valor whatsapp business</td><td class='num'>10</td></tr>
+<tr><td class='idx'>63</td><td>whatsapp cobrando lista de transmissão</td><td class='num'>10</td></tr>
+<tr><td class='idx'>64</td><td>como verificar whatsapp business</td><td class='num'>10</td></tr>
+<tr><td class='idx'>65</td><td>onbeef login</td><td class='num'>10</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Referencia 2025 &mdash; Top 10 de Marco/2025</h2>
+      <h3>Posicoes 1 a 5</h3>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>repitiu</td><td class='num'>4</td></tr>
+<tr><td class='idx'>2</td><td>plataformas de delivery</td><td class='num'>5</td></tr></tbody>
+      </table>
+      <h3>Posicoes 6 a 10</h3>
+      <table>
+        <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+        <tbody><tr><td class='idx'>1</td><td>anota ai logo</td><td class='num'>6</td></tr>
+<tr><td class='idx'>2</td><td>atelier digital</td><td class='num'>6</td></tr>
+<tr><td class='idx'>3</td><td>anota login</td><td class='num'>7</td></tr>
+<tr><td class='idx'>4</td><td>rebeca pizzaria</td><td class='num'>7</td></tr>
+<tr><td class='idx'>5</td><td>pizzaria rebeca</td><td class='num'>8</td></tr>
+<tr><td class='idx'>6</td><td>jotajá login</td><td class='num'>8</td></tr>
+<tr><td class='idx'>7</td><td>jeronimo oscar freire</td><td class='num'>9</td></tr>
+<tr><td class='idx'>8</td><td>ecletica sistema</td><td class='num'>9</td></tr>
+<tr><td class='idx'>9</td><td>google atelier digital cursos gratuitos</td><td class='num'>10</td></tr>
+<tr><td class='idx'>10</td><td>jeronimo burger oscar freire</td><td class='num'>10</td></tr></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- ================== TAB: GANHOS & PERDAS ================== -->
+  <div class="panel" id="tab-movers">
+    <section class="card">
+      <h2>Maiores Ganhos de Ranking (2025 &rarr; 2026)</h2>
+      <p>Palavras presentes em ambos os periodos que mais subiram posicoes.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Palavra-Chave</th>
+            <th class="num">Pos. 2025</th>
+            <th class="num">Pos. 2026</th>
+            <th class="num">Delta</th>
+          </tr>
+        </thead>
+        <tbody><tr><td>rfv o que é</td><td class='num'>76</td><td class='num'>26</td><td class='num up'>+50</td></tr>
+<tr><td>rfv</td><td class='num'>62</td><td class='num'>16</td><td class='num up'>+46</td></tr>
+<tr><td>sistema de pedidos delivery</td><td class='num'>92</td><td class='num'>51</td><td class='num up'>+41</td></tr>
+<tr><td>franquias de comida</td><td class='num'>79</td><td class='num'>44</td><td class='num up'>+35</td></tr>
+<tr><td>plataforma de delivery</td><td class='num'>35</td><td class='num'>9</td><td class='num up'>+26</td></tr>
+<tr><td>pizzaria plataforma</td><td class='num'>64</td><td class='num'>39</td><td class='num up'>+25</td></tr>
+<tr><td>pizzaria em plataforma</td><td class='num'>55</td><td class='num'>32</td><td class='num up'>+23</td></tr>
+<tr><td>ja pediu</td><td class='num'>36</td><td class='num'>16</td><td class='num up'>+20</td></tr>
+<tr><td>comida delivery</td><td class='num'>52</td><td class='num'>34</td><td class='num up'>+18</td></tr>
+<tr><td>matriz rfv</td><td class='num'>24</td><td class='num'>7</td><td class='num up'>+17</td></tr>
+<tr><td>alfalabs</td><td class='num'>23</td><td class='num'>6</td><td class='num up'>+17</td></tr>
+<tr><td>sistema hamburgueria</td><td class='num'>68</td><td class='num'>54</td><td class='num up'>+14</td></tr>
+<tr><td>sistema de delivery</td><td class='num'>36</td><td class='num'>23</td><td class='num up'>+13</td></tr>
+<tr><td>site de delivery</td><td class='num'>85</td><td class='num'>75</td><td class='num up'>+10</td></tr>
+<tr><td>atelier digital google</td><td class='num'>16</td><td class='num'>11</td><td class='num up'>+5</td></tr>
+<tr><td>jota ja</td><td class='num'>14</td><td class='num'>10</td><td class='num up'>+4</td></tr>
+<tr><td>jotaja pedidos</td><td class='num'>23</td><td class='num'>20</td><td class='num up'>+3</td></tr>
+<tr><td>repitiu</td><td class='num'>4</td><td class='num'>2</td><td class='num up'>+2</td></tr>
+<tr><td>pizzaria rebeca</td><td class='num'>8</td><td class='num'>7</td><td class='num up'>+1</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Maiores Perdas de Ranking</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Palavra-Chave</th>
+            <th class="num">Pos. 2025</th>
+            <th class="num">Pos. 2026</th>
+            <th class="num">Delta</th>
+          </tr>
+        </thead>
+        <tbody><tr><td>mensagens para clientes inativos</td><td class='num'>15</td><td class='num'>74</td><td class='num down'>-59</td></tr>
+<tr><td>fispal 2025</td><td class='num'>24</td><td class='num'>68</td><td class='num down'>-44</td></tr>
+<tr><td>pizzaria e pastelaria</td><td class='num'>50</td><td class='num'>81</td><td class='num down'>-31</td></tr>
+<tr><td>recadinho para clientes delivery</td><td class='num'>29</td><td class='num'>54</td><td class='num down'>-25</td></tr>
+<tr><td>pizzaria em jales</td><td class='num'>34</td><td class='num'>54</td><td class='num down'>-20</td></tr>
+<tr><td>hamburgueria em salvador</td><td class='num'>65</td><td class='num'>83</td><td class='num down'>-18</td></tr>
+<tr><td>click to pay o que é</td><td class='num'>45</td><td class='num'>58</td><td class='num down'>-13</td></tr>
+<tr><td>falaê</td><td class='num'>20</td><td class='num'>32</td><td class='num down'>-12</td></tr>
+<tr><td>anotai</td><td class='num'>47</td><td class='num'>53</td><td class='num down'>-6</td></tr>
+<tr><td>o'que é click to pay</td><td class='num'>61</td><td class='num'>67</td><td class='num down'>-6</td></tr>
+<tr><td>ecletica sistema</td><td class='num'>9</td><td class='num'>14</td><td class='num down'>-5</td></tr>
+<tr><td>google atelier digital cursos gratuitos</td><td class='num'>10</td><td class='num'>11</td><td class='num down'>-1</td></tr></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- ================== TAB: NOVAS PALAVRAS ================== -->
+  <div class="panel" id="tab-novas">
+    <section class="card">
+      <h2>Novas Palavras no Top 10 em 2026</h2>
+      <p>Keywords que nao rankeavam em 2025 e agora estao no Top 10.</p>
+      <div class="scroll-area">
+        <table>
+          <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+          <tbody><tr><td class='idx'>1</td><td>repediu</td><td class='num'>1</td></tr>
+<tr><td class='idx'>2</td><td>repediu login</td><td class='num'>1</td></tr>
+<tr><td class='idx'>3</td><td><span class="star" title="Destaque">&#9733;</span> food marketing agency</td><td class='num'>1</td></tr>
+<tr><td class='idx'>4</td><td>whatsapp business cobra por mensagem</td><td class='num'>2</td></tr>
+<tr><td class='idx'>5</td><td><span class="star" title="Destaque">&#9733;</span> crm para restaurantes</td><td class='num'>2</td></tr>
+<tr><td class='idx'>6</td><td>repetiu</td><td class='num'>2</td></tr>
+<tr><td class='idx'>7</td><td><span class="star" title="Destaque">&#9733;</span> food marketing</td><td class='num'>3</td></tr>
+<tr><td class='idx'>8</td><td><span class="star" title="Destaque">&#9733;</span> deliveres</td><td class='num'>3</td></tr>
+<tr><td class='idx'>9</td><td>lista de transmissão whatsapp business paga</td><td class='num'>3</td></tr>
+<tr><td class='idx'>10</td><td>selo de verificação whatsapp</td><td class='num'>3</td></tr>
+<tr><td class='idx'>11</td><td>o whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td class='idx'>12</td><td>whatsapp verificado</td><td class='num'>4</td></tr>
+<tr><td class='idx'>13</td><td>verificado whatsapp</td><td class='num'>4</td></tr>
+<tr><td class='idx'>14</td><td>como ter o selo de verificação no whatsapp business</td><td class='num'>4</td></tr>
+<tr><td class='idx'>15</td><td>quanto custa o whatsapp business</td><td class='num'>4</td></tr>
+<tr><td class='idx'>16</td><td>whatsapp business é pago</td><td class='num'>4</td></tr>
+<tr><td class='idx'>17</td><td><span class="star" title="Destaque">&#9733;</span> empresas de delivery</td><td class='num'>4</td></tr>
+<tr><td class='idx'>18</td><td>lista de transmissão whatsapp agora é paga</td><td class='num'>4</td></tr>
+<tr><td class='idx'>19</td><td>fundamentos do marketing digital google ateliê digital</td><td class='num'>4</td></tr>
+<tr><td class='idx'>20</td><td><span class="star" title="Destaque">&#9733;</span> cardapio digital que integre com a saipos</td><td class='num'>4</td></tr>
+<tr><td class='idx'>21</td><td>conta verificada whatsapp</td><td class='num'>4</td></tr>
+<tr><td class='idx'>22</td><td>selo verificado whatsapp</td><td class='num'>5</td></tr>
+<tr><td class='idx'>23</td><td>delivery brasil</td><td class='num'>5</td></tr>
+<tr><td class='idx'>24</td><td>madero oscar freire</td><td class='num'>5</td></tr>
+<tr><td class='idx'>25</td><td>lista de transmissão whatsapp business agora é pago</td><td class='num'>5</td></tr>
+<tr><td class='idx'>26</td><td><span class="star" title="Destaque">&#9733;</span> foodservice marketing</td><td class='num'>5</td></tr>
+<tr><td class='idx'>27</td><td>verificado no whatsapp</td><td class='num'>5</td></tr>
+<tr><td class='idx'>28</td><td>whatsapp business verificado</td><td class='num'>5</td></tr>
+<tr><td class='idx'>29</td><td>sulserve 2025</td><td class='num'>5</td></tr>
+<tr><td class='idx'>30</td><td>v4 food</td><td class='num'>5</td></tr>
+<tr><td class='idx'>31</td><td>cnpj repediu</td><td class='num'>5</td></tr>
+<tr><td class='idx'>32</td><td>preço whatsapp business</td><td class='num'>6</td></tr>
+<tr><td class='idx'>33</td><td>goomer delivery</td><td class='num'>6</td></tr>
+<tr><td class='idx'>34</td><td>onbeef</td><td class='num'>6</td></tr>
+<tr><td class='idx'>35</td><td>selo azul whatsapp</td><td class='num'>6</td></tr>
+<tr><td class='idx'>36</td><td>rfv significado</td><td class='num'>6</td></tr>
+<tr><td class='idx'>37</td><td>metaverified</td><td class='num'>6</td></tr>
+<tr><td class='idx'>38</td><td>meta verified whatsapp</td><td class='num'>6</td></tr>
+<tr><td class='idx'>39</td><td>lista de transmissão whatsapp agora é pago</td><td class='num'>6</td></tr>
+<tr><td class='idx'>40</td><td>google ateliê digital fundamentos do marketing digital</td><td class='num'>7</td></tr>
+<tr><td class='idx'>41</td><td>verified whatsapp</td><td class='num'>7</td></tr>
+<tr><td class='idx'>42</td><td>acelera food nation</td><td class='num'>7</td></tr>
+<tr><td class='idx'>43</td><td>degusta ai</td><td class='num'>7</td></tr>
+<tr><td class='idx'>44</td><td>como colocar verificado no whatsapp</td><td class='num'>7</td></tr>
+<tr><td class='idx'>45</td><td><span class="star" title="Destaque">&#9733;</span> cardápio web planos</td><td class='num'>7</td></tr>
+<tr><td class='idx'>46</td><td><span class="star" title="Destaque">&#9733;</span> marketing for food service</td><td class='num'>7</td></tr>
+<tr><td class='idx'>47</td><td>meta verified whatsapp business</td><td class='num'>7</td></tr>
+<tr><td class='idx'>48</td><td>prefiro delivery</td><td class='num'>7</td></tr>
+<tr><td class='idx'>49</td><td>whatsapp delivery</td><td class='num'>7</td></tr>
+<tr><td class='idx'>50</td><td>bitbar online</td><td class='num'>8</td></tr>
+<tr><td class='idx'>51</td><td>happy pizza goiania</td><td class='num'>8</td></tr>
+<tr><td class='idx'>52</td><td>meta verificado</td><td class='num'>8</td></tr>
+<tr><td class='idx'>53</td><td>selo whatsapp</td><td class='num'>8</td></tr>
+<tr><td class='idx'>54</td><td>bourdain chef</td><td class='num'>8</td></tr>
+<tr><td class='idx'>55</td><td>dia do barman</td><td class='num'>8</td></tr>
+<tr><td class='idx'>56</td><td>winfood</td><td class='num'>8</td></tr>
+<tr><td class='idx'>57</td><td>o que taxa de franquia</td><td class='num'>9</td></tr>
+<tr><td class='idx'>58</td><td><span class="star" title="Destaque">&#9733;</span> marketing para delivery</td><td class='num'>9</td></tr>
+<tr><td class='idx'>59</td><td>goomer cardapio</td><td class='num'>9</td></tr>
+<tr><td class='idx'>60</td><td>pedidu</td><td class='num'>9</td></tr>
+<tr><td class='idx'>61</td><td>meta verified whatsapp valor</td><td class='num'>9</td></tr>
+<tr><td class='idx'>62</td><td>natural tech 2025</td><td class='num'>9</td></tr>
+<tr><td class='idx'>63</td><td>festival gastronomia preta</td><td class='num'>9</td></tr>
+<tr><td class='idx'>64</td><td>analise rfv</td><td class='num'>9</td></tr>
+<tr><td class='idx'>65</td><td>assinar meta verified whatsapp</td><td class='num'>9</td></tr>
+<tr><td class='idx'>66</td><td>2biz</td><td class='num'>9</td></tr>
+<tr><td class='idx'>67</td><td>reengajar</td><td class='num'>10</td></tr>
+<tr><td class='idx'>68</td><td>chef bourdain</td><td class='num'>10</td></tr>
+<tr><td class='idx'>69</td><td>verificado azul</td><td class='num'>10</td></tr>
+<tr><td class='idx'>70</td><td>como verificar whatsapp business</td><td class='num'>10</td></tr>
+<tr><td class='idx'>71</td><td><span class="star" title="Destaque">&#9733;</span> marketing para restaurantes</td><td class='num'>10</td></tr>
+<tr><td class='idx'>72</td><td>valor whatsapp business</td><td class='num'>10</td></tr>
+<tr><td class='idx'>73</td><td><span class="star" title="Destaque">&#9733;</span> plataforma delivery</td><td class='num'>10</td></tr>
+<tr><td class='idx'>74</td><td>antoine bourdain</td><td class='num'>10</td></tr>
+<tr><td class='idx'>75</td><td>pedido aqui</td><td class='num'>10</td></tr>
+<tr><td class='idx'>76</td><td>defina conosco</td><td class='num'>10</td></tr>
+<tr><td class='idx'>77</td><td>cityfoods</td><td class='num'>10</td></tr>
+<tr><td class='idx'>78</td><td>whatsapp cobrando lista de transmissão</td><td class='num'>10</td></tr>
+<tr><td class='idx'>79</td><td>onbeef login</td><td class='num'>10</td></tr>
+<tr><td class='idx'>80</td><td>fispal food service 2025 data</td><td class='num'>10</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Novas Palavras no Top 20 em 2026</h2>
+      <div class="scroll-area">
+        <table>
+          <thead><tr><th>#</th><th>Palavra-Chave</th><th class="num">Posicao</th></tr></thead>
+          <tbody><tr><td class='idx'>1</td><td>planos meta verified</td><td class='num'>11</td></tr>
+<tr><td class='idx'>2</td><td>taxa de franquia é mensal</td><td class='num'>11</td></tr>
+<tr><td class='idx'>3</td><td>delivery sites</td><td class='num'>11</td></tr>
+<tr><td class='idx'>4</td><td>portal.cardapio.web</td><td class='num'>11</td></tr>
+<tr><td class='idx'>5</td><td>quanto custa o meta verified</td><td class='num'>11</td></tr>
+<tr><td class='idx'>6</td><td>faça já seu pedido</td><td class='num'>11</td></tr>
+<tr><td class='idx'>7</td><td>dados restaurante</td><td class='num'>11</td></tr>
+<tr><td class='idx'>8</td><td>programa pizzaria</td><td class='num'>11</td></tr>
+<tr><td class='idx'>9</td><td>fispal food 2025</td><td class='num'>12</td></tr>
+<tr><td class='idx'>10</td><td>whatsapp verified</td><td class='num'>12</td></tr>
+<tr><td class='idx'>11</td><td>cardapioweb com</td><td class='num'>12</td></tr>
+<tr><td class='idx'>12</td><td>gommer</td><td class='num'>12</td></tr>
+<tr><td class='idx'>13</td><td>exemplos de campanhas</td><td class='num'>12</td></tr>
+<tr><td class='idx'>14</td><td>crm trafego pago</td><td class='num'>12</td></tr>
+<tr><td class='idx'>15</td><td>app para pedir comida en brasil</td><td class='num'>12</td></tr>
+<tr><td class='idx'>16</td><td>cobrança do whatsapp</td><td class='num'>12</td></tr>
+<tr><td class='idx'>17</td><td>p&l</td><td class='num'>12</td></tr>
+<tr><td class='idx'>18</td><td>bitbar</td><td class='num'>12</td></tr>
+<tr><td class='idx'>19</td><td>zigui sistemas para pizarias</td><td class='num'>12</td></tr>
+<tr><td class='idx'>20</td><td>portal parceiro cardapio web</td><td class='num'>12</td></tr>
+<tr><td class='idx'>21</td><td>bee food</td><td class='num'>12</td></tr>
+<tr><td class='idx'>22</td><td><span class="star" title="Destaque">&#9733;</span> o que é hamburguer artesanal</td><td class='num'>12</td></tr>
+<tr><td class='idx'>23</td><td>whatsapp business lista de transmissão</td><td class='num'>13</td></tr>
+<tr><td class='idx'>24</td><td><span class="star" title="Destaque">&#9733;</span> marketing para hamburgueria</td><td class='num'>13</td></tr>
+<tr><td class='idx'>25</td><td>assinar meta verified</td><td class='num'>13</td></tr>
+<tr><td class='idx'>26</td><td>google atelie</td><td class='num'>13</td></tr>
+<tr><td class='idx'>27</td><td><span class="star" title="Destaque">&#9733;</span> marketing for food business</td><td class='num'>14</td></tr>
+<tr><td class='idx'>28</td><td>dks food</td><td class='num'>14</td></tr>
+<tr><td class='idx'>29</td><td>meta verified para empresas</td><td class='num'>14</td></tr>
+<tr><td class='idx'>30</td><td>base automação</td><td class='num'>14</td></tr>
+<tr><td class='idx'>31</td><td>lanchonete plataforma</td><td class='num'>14</td></tr>
+<tr><td class='idx'>32</td><td>portal do parceiro cardapio web</td><td class='num'>14</td></tr>
+<tr><td class='idx'>33</td><td>jotajá summit</td><td class='num'>14</td></tr>
+<tr><td class='idx'>34</td><td>naturaltech</td><td class='num'>15</td></tr>
+<tr><td class='idx'>35</td><td>cardaío web</td><td class='num'>15</td></tr>
+<tr><td class='idx'>36</td><td><span class="star" title="Destaque">&#9733;</span> sistema para restaurante delivery</td><td class='num'>15</td></tr>
+<tr><td class='idx'>37</td><td>jotaja login</td><td class='num'>15</td></tr>
+<tr><td class='idx'>38</td><td>portal jotaja</td><td class='num'>15</td></tr>
+<tr><td class='idx'>39</td><td>etorpedo</td><td class='num'>15</td></tr>
+<tr><td class='idx'>40</td><td>como fazer lista de transmissão no whatsapp business sem pagar</td><td class='num'>15</td></tr>
+<tr><td class='idx'>41</td><td>ateliê digital google</td><td class='num'>15</td></tr>
+<tr><td class='idx'>42</td><td>portal cardapio web</td><td class='num'>16</td></tr>
+<tr><td class='idx'>43</td><td>atelie digital google</td><td class='num'>16</td></tr>
+<tr><td class='idx'>44</td><td>me ajuda saipos</td><td class='num'>16</td></tr>
+<tr><td class='idx'>45</td><td>fispal food service 2025</td><td class='num'>16</td></tr>
+<tr><td class='idx'>46</td><td>google atelie digital</td><td class='num'>17</td></tr>
+<tr><td class='idx'>47</td><td>jotajá</td><td class='num'>17</td></tr>
+<tr><td class='idx'>48</td><td>já pediu</td><td class='num'>17</td></tr>
+<tr><td class='idx'>49</td><td>canal restaurante</td><td class='num'>17</td></tr>
+<tr><td class='idx'>50</td><td>goomer go</td><td class='num'>17</td></tr>
+<tr><td class='idx'>51</td><td>fipan 2025 valor do ingresso</td><td class='num'>17</td></tr>
+<tr><td class='idx'>52</td><td>multipedidos mesas</td><td class='num'>17</td></tr>
+<tr><td class='idx'>53</td><td>delivery whatsapp</td><td class='num'>17</td></tr>
+<tr><td class='idx'>54</td><td>atelie digital</td><td class='num'>18</td></tr>
+<tr><td class='idx'>55</td><td>google atelier digital cursos</td><td class='num'>18</td></tr>
+<tr><td class='idx'>56</td><td>goomer goomer</td><td class='num'>18</td></tr>
+<tr><td class='idx'>57</td><td>plataforma de entrega</td><td class='num'>18</td></tr>
+<tr><td class='idx'>58</td><td>barmn</td><td class='num'>18</td></tr>
+<tr><td class='idx'>59</td><td>anthony bourdan</td><td class='num'>18</td></tr>
+<tr><td class='idx'>60</td><td>comida preta</td><td class='num'>18</td></tr>
+<tr><td class='idx'>61</td><td>googmer</td><td class='num'>18</td></tr>
+<tr><td class='idx'>62</td><td><span class="star" title="Destaque">&#9733;</span> restaurant marketing agency</td><td class='num'>18</td></tr>
+<tr><td class='idx'>63</td><td>meta verified preço</td><td class='num'>18</td></tr>
+<tr><td class='idx'>64</td><td><span class="star" title="Destaque">&#9733;</span> software para pizzaria</td><td class='num'>19</td></tr>
+<tr><td class='idx'>65</td><td>selo autentico instagram</td><td class='num'>19</td></tr>
+<tr><td class='idx'>66</td><td>mister cheff</td><td class='num'>19</td></tr>
+<tr><td class='idx'>67</td><td>admin anota ai</td><td class='num'>20</td></tr>
+<tr><td class='idx'>68</td><td>defina análise</td><td class='num'>20</td></tr>
+<tr><td class='idx'>69</td><td>postagem hamburgueria</td><td class='num'>20</td></tr>
+<tr><td class='idx'>70</td><td>login cardapio web</td><td class='num'>20</td></tr>
+<tr><td class='idx'>71</td><td>feira fispal 2025</td><td class='num'>20</td></tr>
+<tr><td class='idx'>72</td><td>delivery direto login</td><td class='num'>20</td></tr>
+<tr><td class='idx'>73</td><td><span class="star" title="Destaque">&#9733;</span> sistema restaurantes</td><td class='num'>20</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== TAB: SEARCH CONSOLE (GSC) ================== -->
+  <div class="panel" id="tab-gsc">
+    
+    <section class="card">
+      <h2>Search Console &mdash; visitas (cliques) e impressoes</h2>
+      <p>Comparacao entre <strong>01/03/2025 – 31/03/2025</strong> e
+      <strong>01/03/2026 – 31/03/2026</strong>, propriedade <strong>repediu.com.br</strong>
+      (Pesquisa na Web).</p>
+      <div class="banner info" style="margin-top:14px;">
+        Filtro de consultas contendo <strong>rep</strong> (export original do Search Console).
+      </div>
+      <div class="banner gold" style="margin-top:12px;">
+        <strong>Metodo:</strong> os totais abaixo somam as <strong>1.802</strong> linhas da tabela exportada
+        (uma por consulta). Esse somatorio pode diferir levemente do total agregado do painel do GSC por
+        limites de privacidade e arredondamento; serve como comparativo direto ano a ano no mesmo export.
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Cliques &mdash; periodo novo</div>
+        <div class="val">213</div>
+        <div class="sub"><span class="up">+660.7%</span> vs periodo anterior</div>
+      </div>
+      <div class="stat">
+        <div class="label">Cliques &mdash; periodo antigo</div>
+        <div class="val">28</div>
+        <div class="sub">Base de comparacao</div>
+      </div>
+      <div class="stat">
+        <div class="label">Impressoes &mdash; periodo novo</div>
+        <div class="val">61.611</div>
+        <div class="sub"><span class="up">+229.6%</span> vs periodo anterior</div>
+      </div>
+      <div class="stat">
+        <div class="label">Impressoes &mdash; periodo antigo</div>
+        <div class="val">18.692</div>
+        <div class="sub">Base de comparacao</div>
+      </div>
+      <div class="stat gold">
+        <div class="label">CTR medio (linhas somadas)</div>
+        <div class="val">0,35%</div>
+        <div class="sub">antes 0,15%</div>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Grafico: cliques e impressoes</h2>
+      <div class="grid2">
+        <div class="chart-wrap sm"><canvas id="chartGscClicks"></canvas></div>
+        <div class="chart-wrap sm"><canvas id="chartGscImpr"></canvas></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Maiores ganhos de cliques (consulta)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Consulta</th>
+            <th class="num">Cliques (antigo)</th><th class="num">Cliques (novo)</th><th class="num">Ganho</th>
+          </tr>
+        </thead>
+        <tbody><tr><td class='idx'>1</td><td>crm para restaurantes</td><td class='num'>0</td><td class='num'>11</td><td class='num up'>+11</td></tr>
+<tr><td class='idx'>2</td><td>plataformas de delivery</td><td class='num'>1</td><td class='num'>7</td><td class='num up'>+6</td></tr>
+<tr><td class='idx'>3</td><td>meta verified whatsapp</td><td class='num'>0</td><td class='num'>5</td><td class='num up'>+5</td></tr>
+<tr><td class='idx'>4</td><td>onbeef login</td><td class='num'>0</td><td class='num'>5</td><td class='num up'>+5</td></tr>
+<tr><td class='idx'>5</td><td>plataformas de delivery brasil</td><td class='num'>0</td><td class='num'>5</td><td class='num up'>+5</td></tr>
+<tr><td class='idx'>6</td><td>meta verified</td><td class='num'>0</td><td class='num'>4</td><td class='num up'>+4</td></tr>
+<tr><td class='idx'>7</td><td>whatsapp verificado</td><td class='num'>0</td><td class='num'>4</td><td class='num up'>+4</td></tr>
+<tr><td class='idx'>8</td><td>lista de transmissão whatsapp business</td><td class='num'>0</td><td class='num'>4</td><td class='num up'>+4</td></tr>
+<tr><td class='idx'>9</td><td>verificado whatsapp</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>10</td><td>food marketing</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>11</td><td>marketing para restaurantes</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>12</td><td>saipos api</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>13</td><td>empresas de delivery no brasil</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>14</td><td>agencia de marketing para restaurantes</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>15</td><td>verificado fake whatsapp</td><td class='num'>0</td><td class='num'>3</td><td class='num up'>+3</td></tr>
+<tr><td class='idx'>16</td><td>crm restaurante</td><td class='num'>1</td><td class='num'>3</td><td class='num up'>+2</td></tr>
+<tr><td class='idx'>17</td><td>v4 food</td><td class='num'>0</td><td class='num'>2</td><td class='num up'>+2</td></tr>
+<tr><td class='idx'>18</td><td>google ateliê digital</td><td class='num'>0</td><td class='num'>2</td><td class='num up'>+2</td></tr>
+<tr><td class='idx'>19</td><td>lista de transmissão whatsapp business agora é pago</td><td class='num'>0</td><td class='num'>2</td><td class='num up'>+2</td></tr>
+<tr><td class='idx'>20</td><td>selo verificado whatsapp</td><td class='num'>0</td><td class='num'>2</td><td class='num up'>+2</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Top consultas por cliques no periodo novo</h2>
+      <div class="scroll-area">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Consulta</th>
+              <th class="num">Cliques novo</th><th class="num">Cliques antigo</th><th class="num">Delta</th>
+              <th class="num">Impr. novo</th><th class="num">Impr. antigo</th>
+            </tr>
+          </thead>
+          <tbody><tr><td class='idx'>1</td><td>crm para restaurantes</td><td class='num'>11</td><td class='num'>0</td><td class='num'><span class="up">+11</span></td><td class='num'>160</td><td class='num'>142</td></tr>
+<tr><td class='idx'>2</td><td>plataformas de delivery</td><td class='num'>7</td><td class='num'>1</td><td class='num'><span class="up">+6</span></td><td class='num'>105</td><td class='num'>75</td></tr>
+<tr><td class='idx'>3</td><td>meta verified whatsapp</td><td class='num'>5</td><td class='num'>0</td><td class='num'><span class="up">+5</span></td><td class='num'>1.174</td><td class='num'>0</td></tr>
+<tr><td class='idx'>4</td><td>onbeef login</td><td class='num'>5</td><td class='num'>0</td><td class='num'><span class="up">+5</span></td><td class='num'>352</td><td class='num'>0</td></tr>
+<tr><td class='idx'>5</td><td>plataformas de delivery brasil</td><td class='num'>5</td><td class='num'>0</td><td class='num'><span class="up">+5</span></td><td class='num'>24</td><td class='num'>0</td></tr>
+<tr><td class='idx'>6</td><td>meta verified</td><td class='num'>4</td><td class='num'>0</td><td class='num'><span class="up">+4</span></td><td class='num'>1.936</td><td class='num'>0</td></tr>
+<tr><td class='idx'>7</td><td>whatsapp verificado</td><td class='num'>4</td><td class='num'>0</td><td class='num'><span class="up">+4</span></td><td class='num'>713</td><td class='num'>0</td></tr>
+<tr><td class='idx'>8</td><td>lista de transmissão whatsapp business</td><td class='num'>4</td><td class='num'>0</td><td class='num'><span class="up">+4</span></td><td class='num'>471</td><td class='num'>0</td></tr>
+<tr><td class='idx'>9</td><td>verificado whatsapp</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>192</td><td class='num'>0</td></tr>
+<tr><td class='idx'>10</td><td>food marketing</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>190</td><td class='num'>0</td></tr>
+<tr><td class='idx'>11</td><td>marketing para restaurantes</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>122</td><td class='num'>35</td></tr>
+<tr><td class='idx'>12</td><td>saipos api</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>84</td><td class='num'>5</td></tr>
+<tr><td class='idx'>13</td><td>crm restaurante</td><td class='num'>3</td><td class='num'>1</td><td class='num'><span class="up">+2</span></td><td class='num'>71</td><td class='num'>73</td></tr>
+<tr><td class='idx'>14</td><td>crm delivery</td><td class='num'>3</td><td class='num'>3</td><td class='num'><span class="flat">0</span></td><td class='num'>45</td><td class='num'>75</td></tr>
+<tr><td class='idx'>15</td><td>empresas de delivery no brasil</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>44</td><td class='num'>3</td></tr>
+<tr><td class='idx'>16</td><td>agencia de marketing para restaurantes</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>38</td><td class='num'>3</td></tr>
+<tr><td class='idx'>17</td><td>verificado fake whatsapp</td><td class='num'>3</td><td class='num'>0</td><td class='num'><span class="up">+3</span></td><td class='num'>8</td><td class='num'>0</td></tr>
+<tr><td class='idx'>18</td><td>v4 food</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>9.624</td><td class='num'>0</td></tr>
+<tr><td class='idx'>19</td><td>google ateliê digital</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>772</td><td class='num'>0</td></tr>
+<tr><td class='idx'>20</td><td>lista de transmissão whatsapp business agora é pago</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>649</td><td class='num'>0</td></tr>
+<tr><td class='idx'>21</td><td>selo verificado whatsapp</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>349</td><td class='num'>0</td></tr>
+<tr><td class='idx'>22</td><td>selo de verificação whatsapp</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>221</td><td class='num'>0</td></tr>
+<tr><td class='idx'>23</td><td>como fazer lista de transmissão no whatsapp business sem pagar</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>192</td><td class='num'>0</td></tr>
+<tr><td class='idx'>24</td><td>qual o melhor sistema para delivery</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>156</td><td class='num'>14</td></tr>
+<tr><td class='idx'>25</td><td>madero oscar freire</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>145</td><td class='num'>159</td></tr>
+<tr><td class='idx'>26</td><td>b2food</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>128</td><td class='num'>0</td></tr>
+<tr><td class='idx'>27</td><td>lista de transmissão no whatsapp business é pago</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>109</td><td class='num'>0</td></tr>
+<tr><td class='idx'>28</td><td>google ateliê digital – fundamentos do marketing digital</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>92</td><td class='num'>0</td></tr>
+<tr><td class='idx'>29</td><td>torpedo de voz</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>54</td><td class='num'>0</td></tr>
+<tr><td class='idx'>30</td><td>verificado do whatsapp</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>52</td><td class='num'>0</td></tr>
+<tr><td class='idx'>31</td><td>campanha de aniversário</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>34</td><td class='num'>0</td></tr>
+<tr><td class='idx'>32</td><td>plataformas delivery</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>34</td><td class='num'>13</td></tr>
+<tr><td class='idx'>33</td><td>crm para delivery</td><td class='num'>2</td><td class='num'>5</td><td class='num'><span class="down">-3</span></td><td class='num'>24</td><td class='num'>20</td></tr>
+<tr><td class='idx'>34</td><td>epediu</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>12</td><td class='num'>0</td></tr>
+<tr><td class='idx'>35</td><td>ia para delivery</td><td class='num'>2</td><td class='num'>0</td><td class='num'><span class="up">+2</span></td><td class='num'>9</td><td class='num'>0</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    
+  </div>
+
+  <!-- ================== TAB: EMPRESAS ULTRAPASSADAS ================== -->
+  <div class="panel" id="tab-ultrapassados">
+    <section class="card">
+      <h2>Empresas que ultrapassamos no SERP</h2>
+      <p>Por termo de busca, a posicao da <strong>repediu.com.br</strong> em relacao a outros dominios que aparecem no Google
+      (exemplo ilustrativo do ranking organico; complemente com novos termos editando a lista
+      <code style="color:var(--accent);">SERPS_ULTRAPASSADOS</code> em <code style="color:var(--accent);">gerar_comparativo_v2.py</code>).</p>
+      <div class="banner success" style="margin-top:16px;">
+        <strong>Conceito:</strong> mostra em qual posicao o site da Repediu aparece e quais marcas conhecidas do mercado
+        ficam logo abaixo &mdash; util para apresentacoes comerciais e prova de autoridade no nicho.
+      </div>
+    </section>
+    <section class="card">
+      <h2>Exemplos por termo</h2>
+      <article class="serp-block">
+<h3 class="serp-term-title">Termo: <strong>CRM para restaurantes</strong></h3>
+<ul class="serp-results">
+<li class="serp-line ours"><span class="serp-rank">#1</span><div class="serp-cell"><span class="trophy" aria-hidden="true">&#127942;</span> <a class="serp-link" href="https://repediu.com.br/" target="_blank" rel="noopener noreferrer">repediu.com.br</a></div></li>
+<li class="serp-line"><span class="serp-rank">#2</span><div class="serp-cell"><a class="serp-link" href="https://www.pipedrive.com/" target="_blank" rel="noopener noreferrer">www.pipedrive.com</a></div></li>
+<li class="serp-line"><span class="serp-rank">#3</span><div class="serp-cell"><a class="serp-link" href="https://www.kommo.com/" target="_blank" rel="noopener noreferrer">www.kommo.com</a></div></li>
+<li class="serp-line"><span class="serp-rank">#4</span><div class="serp-cell"><a class="serp-link" href="https://www.bitrix24.com.br/" target="_blank" rel="noopener noreferrer">www.bitrix24.com.br</a></div></li>
+<li class="serp-line"><span class="serp-rank">#5</span><div class="serp-cell"><a class="serp-link" href="https://saipos.com/" target="_blank" rel="noopener noreferrer">saipos.com</a></div></li>
+<li class="serp-line"><span class="serp-rank">#6</span><div class="serp-cell"><a class="serp-link" href="https://www.salesforce.com/" target="_blank" rel="noopener noreferrer">www.salesforce.com</a></div></li>
+</ul></article>
+    </section>
+  </div>
+
+  <!-- ================== TAB: INSIGHTS ================== -->
+  <div class="panel" id="tab-insights">
+    <section class="card">
+      <h2>Insights Estrategicos</h2>
+      <div class="banner success">
+        <strong>Crescimento excepcional:</strong> +624 novas palavras rankeadas em 12 meses
+        (<span class="up">+347%</span>) indica mudanca estrutural positiva do site.
+      </div>
+      <div class="banner info">
+        <strong>Consolidacao de marca:</strong> A palavra "repediu" conquistou a 1a posicao, confirmando que o Google
+        reconhece o novo branding.
+      </div>
+      <div class="banner gold">
+        <strong>Destaques comerciais:</strong> 7 das 22 palavras estrategicas ja estao no Top 5,
+        gerando alta probabilidade de conversao.
+      </div>
+
+      <h3>Recomendacoes</h3>
+      <ul class="ins">
+        <li><strong>Acelerar destaques no Top 6-20:</strong> existem 15 palavras de destaque que ainda nao estao no Top 5 &mdash; priorizar link building e otimizacao on-page.</li>
+        <li><strong>Cluster CRM:</strong> termos como "crm para restaurantes" ja estao no Top 2 &mdash; criar hub de conteudo para dominar todas as variacoes.</li>
+        <li><strong>Cluster WhatsApp:</strong> forte performance em "whatsapp business", "lista de transmissao" e "selo verificado" &mdash; ampliar com guias praticos e comparativos.</li>
+        <li><strong>Cluster Delivery:</strong> "plataforma de delivery", "empresas de delivery" e "food marketing" no Top 5 reforcam posicionamento B2B.</li>
+        <li><strong>Monitorar perdas:</strong> analisar pags com queda de ranking para identificar canibalizacao ou queda de autoridade.</li>
+        <li><strong>Expansao Top 100 &rarr; Top 20:</strong> 595 palavras entre 21-100 sao o proximo funil de crescimento organico.</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="foot">
+    Relatorio v2 gerado em 20/04/2026 10:19 &middot; Fonte: exports Semrush (mar/2025 e mar/2026)
+  </footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = '#334155';
+
+new Chart(document.getElementById('chartBars'), {
+  type: 'bar',
+  data: {
+    labels: ["Top 1", "Top 3", "Top 5", "Top 10", "Top 20", "Top 50", "Top 100"],
+    datasets: [
+      { label: 'Mar/2025', data: [0, 0, 2, 12, 41, 115, 180], backgroundColor: '#ef4444', borderRadius: 6 },
+      { label: 'Mar/2026', data: [3, 13, 36, 101, 209, 495, 804], backgroundColor: '#38bdf8', borderRadius: 6 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', labels: { color: '#e2e8f0', font: { weight: '600' } } } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartKey'), {
+  type: 'bar',
+  data: {
+    labels: ['Top 1', 'Top 5', 'Top 10'],
+    datasets: [
+      { label: 'Mar/2025', data: [0, 2, 12], backgroundColor: '#ef4444', borderRadius: 8 },
+      { label: 'Mar/2026', data: [3, 36, 101], backgroundColor: '#a78bfa', borderRadius: 8 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', labels: { color: '#e2e8f0', font: { weight: '600' } } } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartDest'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Top 1', 'Top 2-3', 'Top 4-5', 'Top 6-10', 'Top 11-20', 'Acima de 20'],
+    datasets: [{
+      data: [
+        1,
+        3,
+        3,
+        6,
+        9,
+        0
+      ],
+      backgroundColor: ['#fbbf24', '#38bdf8', '#a78bfa', '#34d399', '#f472b6', '#64748b'],
+      borderColor: '#1e293b',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'right', labels: { color: '#e2e8f0', font: { weight: '600' }, padding: 12 } } }
+  }
+});
+
+(function(){
+  var g = {"ok": true, "clicks25": 28, "clicks26": 213, "impr25": 18692, "impr26": 61611};
+  if (!g || !g.ok) return;
+  var elC = document.getElementById('chartGscClicks');
+  var elI = document.getElementById('chartGscImpr');
+  if (!elC || !elI) return;
+  new Chart(elC, {
+    type: 'bar',
+    data: {
+      labels: ['Mar/2025', 'Mar/2026'],
+      datasets: [{
+        label: 'Cliques',
+        data: [g.clicks25, g.clicks26],
+        backgroundColor: ['#ef4444', '#34d399'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: 'Cliques (soma consultas exportadas)', color: '#e2e8f0', font: { weight: '600', size: 13 } }
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  new Chart(elI, {
+    type: 'bar',
+    data: {
+      labels: ['Mar/2025', 'Mar/2026'],
+      datasets: [{
+        label: 'Impressoes',
+        data: [g.impr25, g.impr26],
+        backgroundColor: ['#f97316', '#38bdf8'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: 'Impressoes (soma consultas exportadas)', color: '#e2e8f0', font: { weight: '600', size: 13 } }
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
